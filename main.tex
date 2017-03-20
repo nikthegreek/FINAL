@@ -8,12 +8,10 @@
 \linespread{1.5}
 %\fontfamily{ptm}\selectfont
 \usepackage{mathptmx}
-
+\usepackage{dsfont}
 \usepackage{amsmath}
 \usepackage{caption, threeparttable}
 \captionsetup{labelfont = sc, textfont = it}
-\setlength{\abovedisplayskip}{1pt}
-\setlength{\belowdisplayskip}{3pt}
 
 %\usepackage[style=ieee-alphabetic]{biblatex}
 \usepackage[
@@ -50,6 +48,45 @@ sorting=none
 \clearpage
 
 \section{Introduction}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \section{Density Functional Theory}
 
 \subsection{The Kohn-Sham Equation}
@@ -143,7 +180,7 @@ We use HEG exchange and correlation energies to compute $\varepsilon_X_C$. Of co
 
 The potential of a lattice is in general, a very complex mathematical object. To analyse the structure and compute important quantities, we must understand the nature of the delocalised electronic wavefunction throughout the entire lattice potential. For a simple case such as a 2D infinite potential well with one electron, the wavefunction can be found very easily without any complex mathematics. We must simplify the potential problem such that carrying out density functional theory calculations is viable and not so taxing. We start by assuming that each atom is a point charge, and located at position $\vec{R}$. To simplify the problem, we assume that the potential $V(\vec{r})$ is spherically symmetric, i.e. V(r). At the sphere boundary r=s\textsubscript{R}, the potential becomes flat, and remains flat (some constant potential V\textsubscript{0}) between the different atomic lattice sites, which we shall refer to as the interstitial. This is the basic assumption behind the Muffin Tin Orbital approximation (MTO). 
 \\
-The problem is simplified further by enlarging the spherically symmetric Wigner-Seitz(space filling) sphere potentials till they overlap slightly. In this way the interstitial becomes negligible and it's contribution is neglected. This is called the Atomic Sphere Approximation (ASA) and replaces the problem with an integral over all space and all Wigner-Seitz spheres, with complete neglect for the interstitial electron kinetic energy E-V\textsubscript{0}. 
+The problem is simplified further by enlarging the spherically symmetric Wigner-Seitz(space filling) sphere potentials till they overlap slightly. In this way the interstitial becomes negligible and it's contribution is neglected. This is called the Atomic Sphere Approximation (ASA)\cite{gunn} and replaces the problem with an integral over all space and all Wigner-Seitz spheres, with complete neglect for the interstitial electron kinetic energy E-V\textsubscript{0}. 
 \\
 Now to analyse the Schrodinger equation for the ASA, which will be as follows. Let the radius of a muffin tin orbital centred at R be denoted as $s_R$ (generally the R subscript shall refer to the value located at the atomic site where r=R) and the interstitial as I. From here onwards, the standard unit convention of $\hbar=1$ $m=1/2$ and $e^2=2$ is used such that $\hbar^2/2m=1$.
 \begin{equation} \tag{3.1}
@@ -337,14 +374,13 @@ The clever part is now to express the envelope function which is defined in all 
 
 These are now energy independent muffin tin orbitals(LMTOs), but this is still rudimentary and incomplete and not general enough. We must consider what happens to this basis upon Hamiltonian and overlap operation. By following the prescription used in \cite{turek}, one obtains an orthogonal Hamiltonian matrix representation $H^{orth}=C + \sqrt{\Delta}S(1-\gamma S)^{-1} \sqrt{\Delta}$ or in a more rigorous form\cite{drchal}.
 \begin{equation} \label{3.20} \tag{3.30}
-H^{orth}_{RL,R'L'}=C_{RL}\delta_{RR'}\delta_{LL'} + \sqrt{\Delta_{RL}}S(1-\gamma S)^{-1} \sqrt{\Delta_{R'L'}}
+H^{orth}_{RL,R'L'}=C_{RL}\delta_{RR'}\delta_{LL'} + \sqrt{\Delta_{RL}}S_{RL,R'L'}(1-\gamma S_{RL,R'L'})^{-1} \sqrt{\Delta_{R'L'}}
 \end{equation}
 In this representation the Orthogonal matrix elements do not contribute to (3.23) and one need only consider the Hamiltonian matrix and its eigenvalues. It is parametrised by the following quantities: 
 $$C_{Rl}=E_{\nu Rl}-\frac{\{K,\phi\}_R_l}{\{K,\dot{\phi}\}_R_l}$$
 $$\Delta_{Rl}=\frac{\omega}{2} \frac{1}{\{K,\dot{\phi}\}^2_{Rl}}$$
 $$\gamma_{Rl}=\frac{\{J,\dot{\phi}\}_{Rl}}{\{K,\dot{\phi}\}_{Rl}}$$
-
-One notices in this orthogonal representation of the Hamiltonian matrix, the orthogonal matrix is null, hence the name. This now forms the basis for constructing the Green's function for one such system. 
+As usual, all wronskians are evaluated at the atomic sphere radius r=s. One notices in this orthogonal representation of the Hamiltonian matrix, the orthogonal matrix is null, hence the name. This now forms the basis for constructing the Green's function for one such system. 
 
 \section{Green's Function approach}
 \subsection{What and why?}
@@ -378,14 +414,12 @@ It is also clear to see that the residue of the simple pole is the product of wa
 \psi(x,t)=\int dy G(x,t,y,t')\psi(y,t')
 \end{equation}
 
-In other words, the Green's function takes a wavefunction at some point in time and space, and evolves it to another point in time and space and is called the propagator for this reason. This is the reason for their importance in condensed matter physics as they provide a mathematical description of how electronic structure evolves in time through a system, which is especially important for magnetic multilayers. It also becomes especially important for perturbation theory when we want to disturb the unperturbed system with some perturbation (usually a potential V) and measure its linear response. Consider $H=H^0+V$ where $H^0$ is the unperturbed or free Hamiltonian and V. In this way we see that for the free greens function $G^0(E)=(E-H^0)^{-1}$ and the perturbed $G(E)=(E-H)^{-1}$. Then by simple multiplication, we obtain the Dyson equation as follows, and the Born expansion (where the complex E dependence has been dropped for brevity).
-
+In other words, the Green's function takes a wavefunction at some point in time and space, and evolves it to another point in time and space and is called the propagator for this reason. This is the reason for their importance in condensed matter physics as they provide a mathematical description of how electronic structure evolves in time through a system, which is especially important for magnetic multilayers. It also becomes especially important for perturbation theory when we want to disturb the unperturbed system with some perturbation (usually a potential V) and measure its linear response. Consider $H=H^0+V$ where $H^0$ is the unperturbed or free Hamiltonian and V is the potential perturbation. In this way we see that for the free greens function $G^0(E)=(E-H^0)^{-1}$ and the perturbed $G(E)=(E-H)^{-1}$. Then by simple multiplication, we obtain the Dyson equation as follows, and the Born expansion (where the complex E dependence has been dropped for brevity).
 \begin{equation} \label{4.1} \tag{4.4}
 G(E)=G^0+G^0VG=G^0+G^0VG+G^0VG^0VG^0+...
 \end{equation}
 
 Now we see that this yields in matrix form $G=(G^0-V)^{-1}$. It is clear to have stationary states and valid solutions of the system, they must be the poles of the green's function G(E). Of course these are obtained (since in matrix form), from the zeros of the determinant, such that
-
 \begin{equation} \label{4.1} \tag{4.5}
 det(t^{-1}-G^0)=|t^{-1}-G^0|=0
 \end{equation}
@@ -415,7 +449,7 @@ This form will become important for CPA implementation.
 
 It is proved with great care in \cite{turek}, that in the orthogonal representation of the Hamiltonian matrix, one can simply express the Green's function similarly to (4.2)
 \begin{equation} \label{4.1} \tag{4.9}
-G^{orth}_{RL,R'L'}(E)=(E\mathbb{1}-H^{orth})^{-1}=\Delta^{-1/2}(P-S)^{-1}\Delta^{-1/2}
+G^{orth}_{RL,R'L'}(E)=(E\mathds{1}-H^{orth})^{-1}=\Delta^{-1/2}(P-S)^{-1}\Delta^{-1/2}
 \end{equation}
 
 
@@ -444,7 +478,7 @@ and from this one sees quite obviously
 
 
 Here $\omega(E,r)$ is the energy-specific electron density. To find the full electron density n(r), one can integrate $\omega(E,r)$ over all energies up to the Fermi energy. Alternatively, can find the 3D density of states D(E) by integrating over all space. 
-\begin{equation} \label{4.1} \tag{4.13}
+\begin{equation} \label{4.1} \tag{4.14}
 n(r)=\int_{-\infty}^{E_F}\omega(E,r) \qquad D_{3D}(E)=\int \omega(E,r) d^3r
 \end{equation}
 
@@ -453,12 +487,12 @@ Eventually we wish to construct band structure graphs of the ferromagnetic insul
 \subsection{Fourier Transformed Green's Function}
 
 To construct any sort of alternative to band structure, we must talk in terms of reciprocal k-space, and a Fourier transform of the real space Green's function must be computed first. Let's assume some translational invariance and say that $\vec{R}=\vec{A}+n\vec{T}$. In other words, the primitive/basis lattice vectors are $\vec{A}$ and $\vec{T}$ is the translation, which defines every other point on the lattice when applied n times. Translational invariance implies that $R+T=R$ as all points are equivalent on a Bravais lattice, leading to $G_{RL,R'L'}(E)=G_{(R+T)L,(R'+T)L'}(E)$. One can now Fourier transform:
-\begin{equation} \label{4.1} \tag{4.14}
+\begin{equation} \label{4.1} \tag{4.15}
 G_{AL,A'L'}(k,E)=\int G_{AL,(A'+T)L'}(r,E)e^{i\vec{k}\cdot \vec{T}} d\vec{k}
 \end{equation}
 
-Now that we have defined the reciprocal Green's function, we can adopt a method analogous to that of the energy resolved charge density in real space (REF EQ)
-\begin{equation} \label{4.1} \tag{4.15}
+Now that we have defined the reciprocal Green's function, we can adopt a method analogous to that of the energy resolved charge density in real space (4.13)
+\begin{equation} \label{4.1} \tag{4.16}
 \mathcal{A}(k,E)=-\frac{1}{\pi} \sum_L G(k,E+i0^+)
 \end{equation}
 In the CPA case of a random alloy, the G(k,E) would be replaced with the configurationally averaged $\expval{G(k,E)}$ (calculated by CPA).
@@ -483,16 +517,17 @@ G_{RR'}(E)= \sum_Q \lambda_R^Q(E)\eta_R^Q +\sum_{QQ'} \mu_R^Q(E) \eta_R^Q g_{RR'
 We now wish to perform a configurational average of the site-diagonal green's function which we denote as $$<G_{RR}(E)>= \sum_Q c_R^Q <G_{RR}^Q(E)>$$ and in the same way with the non diagonal $\expval{G_{RR'}(E)}= \sum_{QQ'} c_R^Q \expval{G_{RR}^Q(E)} c_{R'}^{Q'}$.
 \\ 
 The important aspect of this approximation is replacing the potential function P(E) with some constant (for a given complex energy E) which describes the configurationally averaged Green's function, or in other words a potential function that describes some auxiliary system in which there are no fluctuations. Let us recall the (4.11) and define the configurationally averaged auxiliary green's function.
+\begin{equation} \label{4.1} \tag{5.2}
+\expval{g_{RR'}(E)}=[\mathcal{P}(E)-S]^{-1}_{RR'}
+\end{equation}
 
-$$\expval{g_{RR'}(E)}=[\mathcal{P}(E)-S]^{-1}_{RR'}$$
-
-This is how we define the Coherent potential $\mathcal{P}_{RR'}(E)$. One aspect to make calculations easier is the single-site approximation. One aspect is neglecting all site non-diagonal quantities so $\mathcal{P}_{RR'}(E)\delta_{RR'}=\mathcal{P}_{RR}(E)$, as well as not including any influence from neighbouring sites. The system we wish to probe in the later chapters is that of a ferromagnetic insulating layer which is made of a 2 or 3 component alloy. 
+This is how we define the Coherent potential $\mathcal{P}_{RR'}(E)$. One aspect to make calculations easier is the single-site approximation. One aspect is neglecting all site non-diagonal quantities so $\mathcal{P}_{RR'}(E)\delta_{RR'}=\mathcal{P}_{RR}(E)$\cite{turek}, as well as not including any influence from neighbouring sites. The system we wish to probe in the later chapters is that of a ferromagnetic insulating layer which is made of a 2 or 3 component alloy. 
 \\Let's return to the binary 2-component alloy, consisting of atom species A and B. For each of these sub-lattices, there is an associated coherent potential $\mathcal{P}^A$ and $\mathcal{P}^B$. The essence of the CPA single site approximation, is focus on one reference site at position R, with probability to be A or B, $c_R^A$ or $c_R^B=1-c_R^A$. Every other site R', is described by its own 2 coherent potentials $\mathcal{P}_{R'}^{A,B}(E)$. We use now the KKR multiple scattering theory discussed in the chapter on Green's function, and recall that the scattering T-matrix (4.8) $T=(1-UG^0)^{-1}U$. The unperturbed Green's function is configurationally averaged auxiliary Green's function $\expval{g(E)}_{RR}$ and the perturbation U is the difference in the real potential function and the coherent one. 
 \\
 It is now very important to look at what the CPA is actually doing. The disordered system of fluctuating potential alloy is represented by some pseudo-system where there are no fluctuations and all atoms move coherently in $\mathcal{P}$. We wish to see what happens to the system upon embedding of an A or B atom into the effective CPA medium. The CPA condition is that on average there is no extra scattering by introduction of an extra A or B atom into the effective medium. The scattering T-matrix (4.8) is the total scattering, but if we introduce the concept of non overlapping individual scatterers for each site, we can rewrite T(E) as the sum of individual scatterers $t_i(E)$
 $$T(E)=\sum_it_i(E)$$
 
-In our 2 component system Q=A,B, in the CPA regime we have a perturbation by the difference in real potential (Q species dependant) and coherent (unperturbed or bare) potential for obvious reasons. We define this quantity as $$\Delta^Q_R=P_R^Q-\mathcal{P}_R$$. Also in CPA, the unpertubed Green's function is replaced with the configurationally averaged one. We can now write the single site scatterer T-matrix element as 
+In our 2 component system Q=A,B, in the CPA regime we have a perturbation by the difference in real potential (Q species dependant) and coherent (unperturbed or bare) potential for obvious reasons. We define this quantity as $$\Delta^Q_R=P_R^Q-\mathcal{P}_R$$. Also in CPA, the unperturbed Green's function is replaced with the configurationally averaged one. We can now write the single site scatterer T-matrix element as 
 
 $$t_R^Q(E)=\Delta^Q_R\bigg[1+\expval{g_{RR}}(E)\Delta^Q_R\bigg]^{-1}$$
 
@@ -516,13 +551,11 @@ JMRAM, consists of a Magnetic Tunnel Junction (MTJ), and the read and write word
     \end{measuredfigure}
     \end{figure} 
     
-JMRAM works on the principle of the Josephson effect. In this phenomenon, two superconductors, separated by an and electrically insulating (but ferromagnetic) layer (referred to as FI from here onwards), can transmit current. This is because the cooper pair of electrons formed in the superconductor, tunnels through the insulating layer. $Cu_x(Ni_80Fe_20)_{1-x}$. 
-
-
+JMRAM works on the principle of the Josephson effect. In this phenomenon, two superconductors, separated by a ferromagnetic insulating layer (referred to as FI from here onwards), can transmit (super)current. This is because the cooper pair of electrons formed in the superconductor, tunnels through the insulating layer. $Cu_x(Ni_80Fe_20)_{1-x}$. 
 
 \subsection{Quantum Transport}
 
-It is well known, due to BCS theory \cite{BCS} that electrons in certain materials, below some transition temperature, form bound state singlet Cooper pairs. The pairs can also exist in triplet pairs in more exotic cases such as the superfluidity of Helium-3, but in regular metals where electrons are bound by electron-phonon mediated interactions, Cooper singlet states are formed. The Ferromagnetic insulators (FI) in the MTJ act as what are known as ``Half-Metals" (HM) \cite{HM}, which split the density of states N(E) of majority and minority (up and down) spin carriers by the Zeeman shift as a result of the chosen direction of magnetic field (FIGURE PLS also \cite{HM}). 
+It is well known, due to BCS theory \cite{BCS} that electrons in certain materials, below some transition temperature, form bound state singlet Cooper pairs. The pairs can also exist in triplet pairs in more exotic cases such as the superfluidity of Helium-3, but in regular metals where electrons are bound by electron-phonon mediated interactions, Cooper singlet states are formed. The Ferromagnetic insulators (FI) in the MTJ act as what are known as ``Half-Metals" (HM) \cite{HM}, which split the density of states N(E) of majority and minority (up and down) spin carriers by the Zeeman shift as a result of the chosen direction of magnetic field as shown in figure 2. 
 
 \begin{figure}[htp]
     \centering
@@ -532,10 +565,12 @@ It is well known, due to BCS theory \cite{BCS} that electrons in certain materia
     \end{measuredfigure}
     \end{figure}
 \\
-As a consequence of N(E) splitting, anti-parallel spin alignment between the superconducting electron (one of the pairs) and the FI magnetisation direction, results in an increase in the number of scattering channels, resulting therefore in increased magnetoresistance. By the same mechanism, parallel spin alignment results in a reduced magnetoresistance. It is this physical concept that is the heart of the MTJ. In this way, the Cooper pair could become unbound upon transmission to the FI layer, for the electron with opposite spin quantization due to the Lorentz force. For Cooper pair transport through a superconductor-halfmetal interface, the pair must "rotate" and pick up a phase. The singlet pair $\Psi=\frac{1}{\sqrt{2}}(\ket{\updownarrows}_{k,-k}- \ket{\downuparrows}_{k,-k}$, where the opposite electrons also have opposite but equal momentum k,-k \cite{BCS}. In this way there is a phase difference upon reflectance where $\ket{\uparrow}_{-k}=e^{i\theta/2}\ket{\uparrow}_k$ and $\ket{\downarrow}_{-k}=e^{-i\theta/2}\ket{\downarrow}_k$ \cite{contact}. Therefore the singlet state will now transform to $$\Psi=\frac{1}{\sqrt{2}}[e^{i\theta}\ket{\updownarrows}_{k,-k}- e^{-i\theta}\ket{\downuparrows}_{k,-k}]$$. 
+As a consequence of N(E) splitting, anti-parallel spin alignment between the superconducting electron (one of the pairs) and the FI magnetisation direction, results in an increase in the number of scattering channels, resulting therefore in increased magnetoresistance. By the same mechanism, parallel spin alignment results in a reduced magnetoresistance. It is this physical concept that is the heart of the MTJ. In this way, the Cooper pair could become unbound upon transmission to the FI layer. The electron with anti parallel spin quantisation direction to the ferromagnetic layer, would experience a Lorentz force. In this unstable state, the electron would like to align with the local environment's magnetic field. For Cooper pair transport through a superconductor-halfmetal\cite{HM} interface, the pair must "rotate" and pick up a phase, if it is to survive in the external magnetic field. The singlet pair is expressed as $\Psi=\frac{1}{\sqrt{2}}(\ket{\updownarrows}_{k,-k}- \ket{\downuparrows}_{k,-k}$, where the opposite electrons also have opposite but equal momentum (k,-k)\cite{BCS}. A phase difference upon reflectance must occur upon ferromagnetic layer transmission where $\ket{\uparrow}_{-k}=e^{i\theta/2}\ket{\uparrow}_k$ and $\ket{\downarrow}_{-k}=e^{-i\theta/2}\ket{\downarrow}_k$ \cite{contact}. Therefore the singlet state will now transform to
+\begin{equation} \label{4.1} \tag{6.1}
+\Psi=\frac{1}{\sqrt{2}}[e^{i\theta}\ket{\updownarrows}_{k,-k}- e^{-i\theta}\ket{\downuparrows}_{k,-k}]
+\end{equation}
 
-Now we see that the spin singlet can penetrate and survive the FI interface only if a phase difference $\theta$ occurs for the entire pair, and it rotates in the FI layer and forms a now "spin-mixed" singlet-triplet mixture. In this way we recreate the Josephson effect for supercurrents \cite{josephson}. Therefore passing a supercurrent through the MTJ will result in a different resistance depending on the FI free layer's relative magnetisation quantisation axis, providing the logic-state switching and valid application to transistors. Of course the FI thickness will affect phase difference at the end of the FI, so we choose a thickness that produces a $\Delta\theta=\pi$ (so called a pi-josephson junction). A more mathematically rigorous tight-binding treatment of cooper pair transport can be found in \cite{JMTJpi}, and yields a relationship between layer thickness and phase difference.
-
+Now we see that the spin singlet can penetrate and survive the FI interface only if a phase difference $\theta$ occurs for the entire pair, and it rotates in the FI layer and forms a now "spin-mixed" singlet-triplet state. This is the Josephson effect for supercurrents \cite{josephson}. 
 \begin{figure}[htp]
     \centering
     \begin{measuredfigure}
@@ -544,8 +579,7 @@ Now we see that the spin singlet can penetrate and survive the FI interface only
     \end{measuredfigure}
     \end{figure}
 
-
-
+In combination with magnetoresistance, passing a supercurrent through the MTJ will result in a different resistance depending on the FI free layer's relative magnetisation quantisation axis to the fixed layer, providing the logic-state switching and valid application to transistors. Of course the FI thickness will affect phase difference at the end of the FI, so we choose a thickness that produces a $\Delta\theta=\pi$ (so called a pi-josephson junction). A more mathematically rigorous tight-binding treatment of cooper pair transport can be found in \cite{JMTJpi}, and yields a relationship between layer thickness and phase difference.
 
 \subsection{The MTJ in question}
 
@@ -563,14 +597,13 @@ We also wish to reduce the unfavorable scattering at the FI interface, which can
 At the temperatures below the Curie temperature T\textsubscript{C}, the lattice spin sites, order and align in the same parallel direction, creating an overall macroscopic magnetic moment (magnetisation). The origin order arises from a quantum mechanical effect called the exchange interaction, and determines the T\textsubscript{C}.. 
 \\
 Exchange interaction is not a force, but more of a bias towards having spins of the same spin to keep down the energy cost. Let us consider the singlet (s=0) and triplet (s=1) wavefunctions. The total Fermionic wavefunctions must be antisymmetric under particle exchange, giving rise to the following spatial and spinoral components of the wavefunction. Here the subscrips S and AS stand for symmetric and antisymmetric respectively (under particle exchange).
-
-\begin{equation} \label{4.1} \tag{6.1}
+\begin{equation} \label{4.1} \tag{6.2}
 \Psi_{singlet}(r_1,r_2)=\psi_{AS}\chi_S \qquad \Psi_{triplet}(r_1,r_2)=\psi_{S}\chi_{AS}
 \end{equation}
 
 The expected energies of the singlet (s=0) and triplet (s=1) states are
 
-\begin{equation} \label{4.1} \tag{6.2}
+\begin{equation} \label{4.1} \tag{6.3}
 E_s=\expval{H}_{singlet}=\int \Psi_s^*\hat{H}\Psi_sdr_1dr_2 \qquad E_t=\expval{H}_{triplet}=\int \Psi_t^*\hat{H}\Psi_tdr_1dr_2
 \end{equation}
 
@@ -579,20 +612,20 @@ E_s=\expval{H}_{singlet}=\int \Psi_s^*\hat{H}\Psi_sdr_1dr_2 \qquad E_t=\expval{H
 We know that from spin operator considerations that two coupled spins $S_1\cdot S_2$ have eigenvalues -3/4 and 1/4 for the singlet and triplet states respectively\cite{blundell} due to the following
 $$\expval{2S_1\cdot S_2}=\bra{\Psi}S^2-S_1^2-S_2^2\ket{\Psi}=s(s+1)-2\frac{3}{4}$$
 Now the Hamiltonian for this simple 2 electron system can be written as
-\begin{equation} \label{4.1} \tag{6.3}
-H=\frac{1}{4}(E_S-3E_T)-(E_S-E_T)\hat{S_1} \cdot \hat{S_2}
+\begin{equation} \label{4.1} \tag{6.4}
+\hat{H}=\frac{1}{4}(E_S-3E_T)-(E_S-E_T)\hat{S_1} \cdot \hat{S_2}
 \end{equation}
 The first term is a constant, but it is the spin interaction dependant term that is of interest.
 We define the exchange parameter/constant J \cite{blundell}as
-\begin{equation} \label{4.1} \tag{6.4}
+\begin{equation} \label{4.1} \tag{6.5}
 J=\frac{E_S-E_T}{2}
 \end{equation}
 
 Now we have a spin-dependant Hamiltonian contribution of $H^{spin}=-2JS_1\cdot S_2$. From this simple 2 spin system we can generalise an approximation to describe a lattice of spins with each site labled i,j. Imposing that only exchange contribution from neighbouring sites, we obtain the Heisenberg model.
-\begin{equation} \label{4.1} \tag{6.5}
+\begin{equation} \label{4.1} \tag{6.6}
 H^{spin}=-\sum_{\expval{i,j}}J_{ij}S_i \cdot S_j
 \end{equation}
-\begin{equation} \label{4.1} \tag{6.6}
+\begin{equation} \label{4.1} \tag{6.7}
 H=-\sum_{\expval{i,j}}J_{ij}S_i \cdot S_j-g\mu_BB\sum_iS_i
 \end{equation}
 Here g is the Landè g-factor, $\mu_B$ is the Bohr magneton and B is the magnetic field strength (which defines the z-direction). 
@@ -600,12 +633,12 @@ Here g is the Landè g-factor, $\mu_B$ is the Bohr magneton and B is the magneti
 Now we must link these exchange parameters J to the Curie temperature T\textsubscript{C}. We turn to mean field approximation methods to solve this problem. In this mean field, a spin at site i ($S_i$) experiences an average field of all spins surrounding it ($\expval{S_i}$). Realising $S_i=S_i-\expval{S_i}+\expval{S_i}$, one can expand to first order
 $$S_i\cdot S_j=\expval{S_i}\expval{S_j}+\expval{S_i}(S_j-\expval{S_j}) + \expval{S_i}(S_i-\expval{S_i})$$
 
-Plugging this back in to (6.6), one obtains the mean field Hamiltonian
-\begin{equation} \label{4.1} \tag{6.7}
+Plugging this back in to (6.7), one obtains the mean field Hamiltonian
+\begin{equation} \label{4.1} \tag{6.8}
 H_{mean-field}=\sum_{ij}J_{ij}\expval{S_i}\expval{S_j}-2\sum_{ij}J_{ij}S_i\cdot S_j--g\mu_BB\sum_iS^z_i
 \end{equation}
 Now let us consider the partition function for this system $Z=exp(-H/kT)$ where H is the mean field Hamiltonian, k is Boltzmann's constant and T is temperature. By appreciating that the magnetisation M(T) of the system is the mean field $\expval{S^z_i}$, one can (rather tediously) compute the magnetisation from a Brillouin function approach, and considering the point where magnetisation becomes non-zero, one obtains $T_C=\frac{2(S+1)J_0}{3S}$ which in the classical limit of many spins as $S\rightarrow \infty $, reduces to
-\begin{equation} \label{4.1} \tag{6.8}
+\begin{equation} \label{4.1} \tag{6.9}
 T_C\approx\frac{2J_0}{3}
 \end{equation}
 The $J_0$ exchange parameter is essential in calculating the T\textsubscript{C}, and is an output of the 'lmgf' code as we shall see in the results section.
@@ -690,10 +723,23 @@ Now we consider the magnetic moments of all these different alloys in the follow
 MAKE THIS
 \\
 \clearpage
-Another factor to consider is the Curie temperature of all of these alloys to see if they are viable for running under the superconducting critical temperature of Niobium, and certainly ideally at about 4-5K. Exchange integrals/parameters $J_0$ (discussed earlier) are self consistently calculated for each element. A total $J_0$ can be calculated by considering the contribution from each element in the alloy. Then using the mean-field 2/3 law (6.8) , we can obtain the Curie temperature. 
-\\
-table of Tc
-\\
+Another factor to consider is the Curie temperature of all of these alloys to see if they are viable for running under the superconducting critical temperature of Niobium, and certainly ideally at about 4-5K. Exchange integrals/parameters $J_0$ (discussed earlier) are self consistently calculated for each element. A total $J_0$ can be calculated by considering the contribution from each element in the alloy. Then using the mean-field 2/3 law (6.8) , we can obtain the Curie temperature. Calculating the total $J_0$ was obtained by multiplying the individual exchange constants for each element. E.g. for $Py_{80}Cu_{20}=(Fe_{20}Ni_{80})_{80}Cu_{20}$, $J_0^{total}=J_0^{Fe}*0.2*0.8+J_0^{Ni}*0.8*0.8+J_0^{Cu}*0.2$. The units of mRy needed to be converted also to Joules J, by the conversion factor $1mRy=\frac{0.001*13.6}{0.00008617}J$.
+\begin{table}[h!]
+\centering
+ \begin{tabular}{||c c c c c c||} 
+ \hline
+ Alloy Ratio & $J_0^{Fe}$ & $J_0^{Ni}$ & $J_0^{Cu}$ & $J_0^{Total}$ & Curie $T_C$ \\ [1ex] 
+ \hline\hline
+ $Py$ & 10.34 & 4.607 & null & 5.7536 & 605.38 \\ 
+ $Py_{80}Cu_{20}$ & 8.662 & 2.509 & 0.096 & 3.01088 & 316.80 \\
+ $Py_{60}Cu_{40}$ & 6.731 & 1.861 & 0.056 & 1.7234 & 181.33 \\
+ $Py_{40}Cu_{60}$ & 5.297 & 1.148 & 0.022 & 0.80432 & 84.63 \\
+ $Py_{20}Cu_{80}$ & 2.447 & 0.052 & 0.003 & 0.1086 & 11.43 \\ [1ex] 
+ \hline
+ \end{tabular}
+\caption{The calculation of Curie temperature T\textsubscript{C}(K) from exchange constants J\textsubscript{0}(mRy), for different ratios of pure permalloy Py-$Fe_{20}Cr_{80}$ and copper Cu.} 
+\end{table}
+
 
 
 
