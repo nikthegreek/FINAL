@@ -301,9 +301,9 @@ det[P_R_l(E) \delta_{RL,R'L'} - S_{RL,R'L'}]=0
 
 \subsection{Linearisation of Energy}%---------------------------------------
 
-Let's assume there exists an energy neighbourhood around some $E=E_\nu$ that is related to energy linearisation, which can be chosen for the specific case in question. Assuming this E that linearlises the energy, we can Taylor expand the wave function in terms of the wavefunction at $E=E_\nu$. We assume such an energy exists such that:
-
-
+It would be ideal, and less complicated if our basis set was energy-independent. If this is the case, one can simply make the statement that $<\psi|\hat{H}|\psi>= <\psi|E|\psi>=E<\psi|\psi>$, which fits rather neatly into our hamiltonian and orthogonal matrix elements (discussed below).
+%$$\sum_{i,j}[H_{i,j}-EO_{i,j}]=0 $$
+Let's assume there exists an energy neighbourhood around some $E=E_\nu$ that is related to energy linearisation, which can be chosen for the specific case in question. Assuming this E that linearlises the energy, we can Taylor expand the wave function in terms of the wavefunction at $E=E_\nu$. We assume such an energy exists such that\cite{turek}:
 \begin{equation} \label{3.18} \tag{3.18}
 \varphi(r,E) = \varphi_{\nu} + \dot{\varphi}_{\nu}(E-E_\nu)+O(E-E_\nu)^2=\phi + \dot{\phi}(E-E_\nu)+O(E-E_\nu)^2
 \end{equation}
@@ -330,9 +330,9 @@ H_i_j=\int \chi_i[-\nabla^2+V(r)]\chi_j d^3r=\int_{site} \chi_i[-\nabla^2+V(r)]\
 O_i_j=\int \chi_i\chi_j d^3r
 \end{equation}
 
-The form of these matrices falls rather neatly into the method of Lagrange multipliers. In this method, one has a function f(x,y) and a constraint on that function g(x,y)=c. One can express the Lagrange function $L(x,y,z)=f(x,y)-\lambda(g(x,y)-c)$ due to the variational constraint above. Now if some point on that function maximises it, there exists a Lagrange multiplier $\lambda_0$ which is associated with that point, and we require that the derivative of L is zero at these extrema. In this case our constraint is (3.20), and in matrix form, we can express the Lagrange multiplier as the energy associated with the Hamiltonian acting on the basis.
+The form of these matrices falls rather neatly into the method of Lagrange multipliers. In this method, one has a function f(x,y) and a constraint on that function g(x,y)=c. One can express the Lagrange function $L(x,y,z)=f(x,y)-\lambda(g(x,y)-c)$ due to the variational constraint above. Now if some point on that function maximises it, there exists a Lagrange multiplier $\lambda_0$ which is associated with that point, and we require that the derivative of L is zero at these extrema. In this case our constraint is (3.20), and in matrix form, we can express the Lagrange multiplier as the energy associated with the Hamiltonian acting on the basis. It is clear that $\sum_{i,j}[H_{i,j}-EO_{i,j}]=0$, and so equivelantly in matrix notation one obtains:
 \begin{equation} \label{3.20} \tag{3.23}
-det[\bra{i}\hat{H}\ket{j}-E\bra{i}\ket{j} ]= det[EO_i_j -H_i_j]=
+det[\bra{i}\hat{H}\ket{j}-E\bra{i}\ket{j} ]= det[EO_i_j -H_i_j]=0
 \end{equation}
 
 Let's consider the behaviour of the radial amplitude at the linearisation energy. It is now important to notice some important features of $\phi$ (radial amplitude evaluated at the linearisation energy) and $\dot{\phi}$(energy derivative evaluated at $E_\nu$). Firstly, the following orthonomality conditions for the linearised radial amplitudes are clear:
@@ -340,9 +340,6 @@ Let's consider the behaviour of the radial amplitude at the linearisation energy
 \begin{equation} \label{3.20} \tag{3.24}
 \int \phi^2 r^2 dr=1 \qquad \bra{\phi}\ket{\dot{\phi}}=\int \dot{\phi}\phi=0
 \end{equation}
-
-
-%%$$\{ \phi ,\dot{\phi} \} =-1$$
 
 Now we must construct the LMTO in the $\chi_i$ form. We must first confirm that the irregular and decaying solutions K(r) match smoothly and differentiably on to a linear combination of $\phi(r)$ and $\dot{\phi}(r)$, the radial amplitudes evaluated at the linearisation energy $E_\nu$. 
 
@@ -374,12 +371,12 @@ The clever part is now to express the envelope function which is defined in all 
 
 These are now energy independent muffin tin orbitals(LMTOs), but this is still rudimentary and incomplete and not general enough. We must consider what happens to this basis upon Hamiltonian and overlap operation. By following the prescription used in \cite{turek}, one obtains an orthogonal Hamiltonian matrix representation $H^{orth}=C + \sqrt{\Delta}S(1-\gamma S)^{-1} \sqrt{\Delta}$ or in a more rigorous form\cite{drchal}.
 \begin{equation} \label{3.20} \tag{3.30}
-H^{orth}_{RL,R'L'}=C_{RL}\delta_{RR'}\delta_{LL'} + \sqrt{\Delta_{RL}}S_{RL,R'L'}(1-\gamma S_{RL,R'L'})^{-1} \sqrt{\Delta_{R'L'}}
+H^{orth}_{RL,R'L'}=C_{RL}\delta_{RR'}\delta_{LL'} + \sqrt{\Delta_{RL}}S_{RL,R'L'}(1-\gamma_{RL} S_{RL,R'L'})^{-1} \sqrt{\Delta_{R'L'}}
 \end{equation}
 In this representation the Orthogonal matrix elements do not contribute to (3.23) and one need only consider the Hamiltonian matrix and its eigenvalues. It is parametrised by the following quantities: 
-$$C_{Rl}=E_{\nu Rl}-\frac{\{K,\phi\}_R_l}{\{K,\dot{\phi}\}_R_l}$$
-$$\Delta_{Rl}=\frac{\omega}{2} \frac{1}{\{K,\dot{\phi}\}^2_{Rl}}$$
-$$\gamma_{Rl}=\frac{\{J,\dot{\phi}\}_{Rl}}{\{K,\dot{\phi}\}_{Rl}}$$
+$$C_{RL}=E_{\nu RL}-\frac{\{K,\phi\}_R_L}{\{K,\dot{\phi}\}_R_L}$$
+$$\Delta_{RL}=\frac{\omega}{2} \frac{1}{\{K,\dot{\phi}\}^2_{RL}}$$
+$$\gamma_{RL}=\frac{\{J,\dot{\phi}\}_{RL}}{\{K,\dot{\phi}\}_{RL}}$$
 As usual, all wronskians are evaluated at the atomic sphere radius r=s. One notices in this orthogonal representation of the Hamiltonian matrix, the orthogonal matrix is null, hence the name. This now forms the basis for constructing the Green's function for one such system. 
 
 \section{Green's Function approach}
@@ -403,12 +400,9 @@ In physics, when we refer to the Green's function, we mean the Green's function 
 \end{equation}
 
 Assuming an orthonormal basis of eigenfunctions that satisfy $H\ket{\psi_i}=\epsilon_i \ket{\psi_i}$ then we obtain that 
-
 \begin{equation} \label{4.1} \tag{4.2}
 G(E) = \sum_i \ket{\psi_i} \frac{1}{E-\epsilon_i} \bra{\psi_i}=\sum_i \frac{\psi \psi_i^*}{E-\epsilon_i}=\lim_{\xi\to\ 0^+} \sum_i \frac{\psi \psi_i^*}{E-\epsilon_i+i\eta}
 \end{equation}
-
-
 It is also clear to see that the residue of the simple pole is the product of wavefunctions.The standard way to extract information from Green's functions is to inspect their behaviour using complex analysis as they are complex functions. To do integration of G, we must consider a contour that avoids the simple pole, $E=\epsilon_i$, let us take $\epsilon_i \rightarrow \epsilon_i-i\eta$ where $\eta=0^+$, some positive infinitesimal.
 \begin{equation} \label{4.1} \tag{4.3}
 \psi(x,t)=\int dy G(x,t,y,t')\psi(y,t')
@@ -427,13 +421,11 @@ det(t^{-1}-G^0)=|t^{-1}-G^0|=0
 This is the Korringa-Kohn-Rostoker (KKR) Green's function method (also referred to as the multiple scattering theory or MST). MST has proved very successful due to its separation of structure and scattering problems to be solved independently. 
 
 Rewriting the Born series, allows us to employ a scattering matrix approach. 
-
 \begin{equation} \label{4.1} \tag{4.6}
 G(E)=G^0+G^0(V+VG^0V+...)G^0
 \end{equation}
 
 Where we define the scattering T-matrix or T-operator as $T(E)= V+VG^0V+...$ leading to the scattering equation.
-
 \begin{equation} \label{4.1} \tag{4.7}
 G(E)=G^0+G^0TG^0
 \end{equation}
@@ -445,7 +437,7 @@ T(E)=[1-VG^0]^{-1}V=[1-G^0V]^{-1}V
 
 This form will become important for CPA implementation.
 
-\subsection{LMTO}
+\subsection{Application to the LMTO basis}
 
 It is proved with great care in \cite{turek}, that in the orthogonal representation of the Hamiltonian matrix, one can simply express the Green's function similarly to (4.2)
 \begin{equation} \label{4.1} \tag{4.9}
@@ -468,10 +460,10 @@ Thus poles of G(E) and g(E) both yield solutions to the KKR-ASA secular equation
 The Green's function of any condensed matter system is complex, and the real and imaginary parts have their own respective sets of observable results. One of the most important comes from the imaginary part as follows. 
 $Im[G(r,r',E+i\eta]$. Now lets decompose the $1/E+i\eta-\epsilon_i$ into its imaginary part only which can be done by acting the complex conjugate ($E+i\eta-\epsilon_i$) on the top and bottom and so one obtains 
 \begin{equation} \label{4.1} \tag{4.12}
-\lim_{\xi\to\ 0^+}Im[\frac{1}{E+i\eta-\epsilon_i}]=-i\pi \delta(E-\epsilon_i)
+\lim_{\xi\to\ 0^+}Im\bigg[\frac{1}{E+i\eta-\epsilon_i}\bigg]=\lim_{\xi\to\ 0^+}\bigg(-\frac{\eta}{(E-\epsilon_i)^2-\eta^2}\bigg)=-i\pi \delta(E-\epsilon_i)
 \end{equation}
 
-and from this one sees quite obviously
+in the limit of the positive infinitesimal $0^+$ and from this one sees quite obviously
 \begin{equation} \label{4.1} \tag{4.13}
 \lim_{\xi\to\ 0^+}Im[-\frac{1}{\pi}G(r,r',E-\epsilon_i)]=\sum_i \psi^*_i\psi_i \delta(E-\epsilon_i)=\omega(E,r)
 \end{equation}
@@ -491,16 +483,16 @@ To construct any sort of alternative to band structure, we must talk in terms of
 G_{AL,A'L'}(k,E)=\int G_{AL,(A'+T)L'}(r,E)e^{i\vec{k}\cdot \vec{T}} d\vec{k}
 \end{equation}
 
-Now that we have defined the reciprocal Green's function, we can adopt a method analogous to that of the energy resolved charge density in real space (4.13)
+Now that we have defined the Green's function in reciprocal k-space, we can adopt a method analogous to that of the energy resolved charge density in real space (4.13)
 \begin{equation} \label{4.1} \tag{4.16}
 \mathcal{A}(k,E)=-\frac{1}{\pi} \sum_L G(k,E+i0^+)
 \end{equation}
-In the CPA case of a random alloy, the G(k,E) would be replaced with the configurationally averaged $\expval{G(k,E)}$ (calculated by CPA).
+In the CPA case of a random alloy, the G(k,E) would be replaced with the configurationally averaged $\expval{G(k,E)}$ (calculated by CPA). The spectral function is vital for construction of band structure for materials where translational invariance and conventional band calculations are no longer valid. The spectral function scans all momenta, and peaks at excitation energies, which plots the bands.
 
-\section{CPA THEORY}
+\section{Modelling Random Alloys}
 \subsection{Motivation}
 
-When dealing with systems of multilayers, and other complicated systems with multiple species of atoms, one must consider how to implement this into the simulation. The Coherent Potential Approximation (CPA) is a way of simplifying the problem by taking configurational average of the Green's function and introducing an effective medium. The effective medium absorbs all of the spatially fluctuating potential, by a Coherent potential which is constant. This is also combined with a single site approximation, where instead of different atom species, we assume every site could be any one species endowed with some probability. We shall see that the scattering T-matrix, vanishes upon implementing the difference between the real and coherent potential. This is useful because now the Green's function describing the real and fluctuating potential is now mathematically equivalent to that of the coherent potential, to within some small error margin. In other words, one can use the configurationally averaged green's function in place of the real one to calculate physical observables.
+When dealing with systems of multilayers, and other complicated systems with multiple species of atoms, one must consider how to implement this into the simulation. The Coherent Potential Approximation (CPA)\cite{turek,drchal} is a way of simplifying the problem by taking configurational average of the Green's function and introducing an effective medium. The effective medium absorbs all of the spatially fluctuating potential, by a Coherent potential which is constant. This is also combined with a single site approximation, where instead of different atom species, we assume every site could be any one species endowed with some probability. We shall see that the scattering T-matrix, vanishes upon implementing the difference between the real and coherent potential. This is useful because now the Green's function describing the real and fluctuating potential is now mathematically equivalent to that of the coherent potential, to within some small error margin. In other words, one can use the configurationally averaged green's function in place of the real one to calculate physical observables.
 
 \subsection{Mathematical Formalism}
 
