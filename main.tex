@@ -632,64 +632,29 @@ Many different alloy configurations were tested for their effectiveness as FI la
     \end{measuredfigure}
     \end{figure}
 
-Figure 4 shows that there is very little scattering (blurry/fuzziness) for the minority spin carriers, but more for the majority channel. Whilst we require both channels to have reduced scattering, this is ok. At first sight this seems like the perfect material for the MTJ, but the magnetic moment of the alloy must also be reduced. The reasoning for this is found in the JMRAM chapter. We wish to quench the magnetic moment by including a non-magnetic element into the alloy which will be copper Cu in this case. In other words to make the perfect MTJ, we wish to have a balance between low scattering, high spin lifetime, and low magnetisation. The addition of Cu to the alloy mix creates more scattering but quenches the magnetic moment, as can be seen in the following Spectral functions.
+Figure 4 shows that there is very little scattering (blurry/fuzziness) for the minority spin carriers, but more for the majority channel. Whilst we require both channels to have reduced scattering, this is adequate. At first sight this seems like the perfect material for the MTJ, but the magnetic moment of the alloy must also be reduced. The reasoning for this is found in the JMRAM chapter. We wish to quench the magnetic moment by including a non-magnetic element into the alloy which will be copper Cu in this case. In other words to make the perfect MTJ, we wish to have a balance between low scattering, high spin lifetime, and low magnetisation. The addition of Cu to the alloy mix creates more scattering but quenches the magnetic moment, as can be seen in the following Spectral functions.
+Figure 5 shows that with just 20\% copper doping, scattering increases for both channels. The subsequent figures also show the increased scattering through a higher Cu concentration. Interestingly the 80\% Cu concentration shows relatively little scattering for both channels in the permalloy case. This might be due to computational error.
 
-\begin{figure}[htp]
-    \centering
-    \begin{measuredfigure}
-    \includegraphics[scale=0.40]{specfunc/cu20}
-    \caption{Plotted Bloch Spectral function for pure Permalloy $Py_{80}Cu_{20}$ via lmgf calculations}
-    \end{measuredfigure}
-    \end{figure}
-\clearpage
-Figure 5 shows that with just 20\% copper doping, scattering increases for both channels. The subsequent figures (6,7,8,9) also show the increased scattering through a higher Cu concentration. Interestingly the 80\Cu concentration shows relatively little scattering for both channels. This might be due to computational error.
 \begin{figure}[h!]
     \centering
     \begin{measuredfigure}
-    \includegraphics[scale=0.40]{specfunc/cu40}
-    \caption{Plotted Bloch Spectral function for pure Permalloy-Copper alloy $Py_{60}Cu_{40}$ via lmgf calculations}
+    \includegraphics[scale=0.40]{complete/py}
+    \caption{Plotted Bloch Spectral function for pure Permalloy-Copper alloys for the minority and majority spin channels via lmgf calculations. Py alloyed with 20,40,70,80\% Cu}
     \end{measuredfigure}
     \end{figure}
+
+This ratio of Permalloy may not be ideal, so a simulation of ($Fe_{40}Ni_{60}$) was also carried out, but led to increased scattering and was omitted as a result.
+Next simulations of Iron-Chromium alloys were performed, but the starting point is somewhat ambiguous. Firstly, $Fe_{99}Cr_{1}$ was tried as a test, and produced an excellent band structure, but produced very high magnetisation, from the offset. This choice is motivated by the Cr orbital structure, which is similar to Ni, as they are in the same row of the periodic table \cite{ashcroft}. However they differ in that pure Chromium forms in BCC structure with a lattice constant of 2.88{\AA} and Nickel in FCC with 3.52{\AA}\cite{ashcroft}. So $Fe_{90}Cr_{10}$ and $Fe_{60}Cr_{40}$ were also attempted, and the following figure 6 shows the results for $Fe_{90}Cr_{10}$ alloyed with copper.
+
 \begin{figure}[h!]
     \centering
     \begin{measuredfigure}
-    \includegraphics[scale=0.40]{specfunc/cu60}
-    \caption{Plotted Bloch Spectral function for pure Permalloy-Copper alloy $Py_{40}Cu_{60}$ via lmgf calculations}
+    \includegraphics[scale=0.40]{complete/Fe90Cr10}
+    \caption{Plotted Bloch Spectral function for pure Iron-Chromium alloys for the minority and majority spin channels via lmgf calculations. $Fe_{90}Cr_{10}$ alloyed with 0,20,40,60\% Cu}
     \end{measuredfigure}
     \end{figure}
-\begin{figure}[htp]
-    \centering
-    \begin{measuredfigure}
-    \includegraphics[scale=0.40]{specfunc/cu70}
-    \caption{Plotted Bloch Spectral function for pure Permalloy-Copper alloy $Py_{30}Cu_{70}$ via lmgf calculations}
-    \end{measuredfigure}
-    \end{figure}
-\begin{figure}[htp]
-    \centering
-    \begin{measuredfigure}
-    \includegraphics[scale=0.40]{specfunc/cu80}
-    \caption{Plotted Bloch Spectral function for Permalloy-Copper alloy $Py_{20}Cu_{80}$ via lmgf calculations}
-    \end{measuredfigure}
-    \end{figure}
-\clearpage
-This ratio of Permalloy may not be ideal, so a simulation of ($Fe_{40}Ni_{60}$) was also carried out as shown in figure 10, but 
 
-
-
-As is obvious, the spectral function of the different Permalloy ratio leads to a lot of scattering even before the introduction of any copper into the mix. For this reason, we keep the current ratio of Permalloy at ($Fe_{20}Ni_{80}$). But perhaps there is something else to do, what if the Nickel was replaced now with Chromium Cr. This choice is motivated by the Cr orbital structure, which is similar to Ni, as they are in the same row of the periodic table \cite{ashcroft}. However they differ in that pure Chromium forms in BCC structure with a lattice constant of 2.88{\AA} and Nickel in FCC with 3.52{\AA}. Their differences might produce better spectral functions, so first a test simulation of ($Fe_{99}Cr_{1}$) was carried out with doubts as to its ferromagnetic properties.
-
-Firstly pure ($Fe_{20}Cr_{80}$) then addition of copper to quench again the magnetic moment. The following spectral functions show these results:
-
-
-
-PUT IN
-
-Now we consider the magnetic moments of all these different alloys in the following table, which are outuputs of the lmgf code.
-\\ 
-MAKE THIS
-\\
-\clearpage
-Another factor to consider is the Curie temperature of all of these alloys to see if they are viable for running under the superconducting critical temperature of Niobium, and certainly ideally at about 4-5K. Exchange integrals/parameters $J_0$ (discussed earlier) are self consistently calculated for each element. A total $J_0$ can be calculated by considering the contribution from each element in the alloy. Then using the mean-field 2/3 law (6.8) , we can obtain the Curie temperature. Calculating the total $J_0$ was obtained by multiplying the individual exchange constants for each element. E.g. for $Py_{80}Cu_{20}=(Fe_{20}Ni_{80})_{80}Cu_{20}$, $J_0^{total}=J_0^{Fe}*0.2*0.8+J_0^{Ni}*0.8*0.8+J_0^{Cu}*0.2$. The units of mRy needed to be converted also to Joules J, by the conversion factor $1mRy=\frac{0.001*13.6}{0.00008617}J$.
+Another factor to consider is the Curie temperature of all of these alloys to see if they are viable for running under the superconducting critical temperature of Niobium, and certainly ideally at about 4-5K. Exchange integrals/parameters $J_0$ (discussed earlier) are self consistently calculated for each element. A total $J_0$ can be calculated by considering the contribution from each element in the alloy. Then using the mean-field 2/3 law (6.9) , we can obtain the Curie temperature. Calculating the total $J_0$ was obtained by multiplying the individual exchange constants for each element. E.g. for $Py_{80}Cu_{20}=(Fe_{20}Ni_{80})_{80}Cu_{20}$, $J_0^{Total}=J_0^{Fe}*0.2*0.8+J_0^{Ni}*0.8*0.8+J_0^{Cu}*0.2$. The units of mRy needed to be converted also to Joules J, by the conversion factor $1mRy=\frac{0.001*13.6}{0.00008617}J$.
 \begin{table}[h!]
 \centering
  \begin{tabular}{||c c c c c c||} 
@@ -750,19 +715,36 @@ The overall magnetic moment of the materials was also calculated by 'lmgf', yiel
  \hline\hline
  $Fe_{99}Cr_1$ & 12.369 & 15.346 & null & 12.399 & 1304.58 \\ 
  $Fe_{90}Cr_{10}$ & 12.358 & 6.98 & null & 11.820 & 1243.702\\
- $Fe_{60}Cr_{40}$ & 9.238 & 0.457 & null & 8.543 & 898.834 \\
+ $Fe_{60}Cr_{40}$ & 9.238 & 0.457 & null & 5.726 & 602.438 \\
  $(Fe_{90}Cr_{10})_{90}Cu_{20}$ & 11.020 & 7.487 & 0.046 & 8.543 & 898.834 \\ 
  $(Fe_{90}Cr_{10})_{60}Cu_{40}$ & 10.337 & 6.238 & 0.068 & 5.983 & 629.570 \\
  $(Fe_{90}Cr_{10})_{40}Cu_{60}$ & 8.835 & 3.518 & 0.077 & 3.368 & 354.325 \\ 
- $(Fe_{60}Cr_{40})_{80}Cu_{20}$ & 10.337 & 6.238 & 0.068 & 5.983 & 629.570 \\
- $(Fe_{60}Cr_{40})_{70}Cu_{30}$ & 10.337 & 6.238 & 0.068 & 5.983 & 629.570 \\
- $(Fe_{60}Cr_{40})_{60}Cu_{40}$ & 10.337 & 6.238 & 0.068 & 5.983 & 629.570 \\ [1ex]
+ $(Fe_{60}Cr_{40})_{80}Cu_{20}$ & 7.330 & 0.524 & 0.019 & 3.690 & 388.243 \\
+ $(Fe_{60}Cr_{40})_{60}Cu_{40}$ & 6.015 & 0.553 & 0.029 & 2.310 & 243.025 \\ [1ex]
  \hline
  \end{tabular}
 \caption{The calculation of Curie temperature T\textsubscript{C}(K) from exchange constants J\textsubscript{0}(mRy), for different ratios of Iron-chromium alloy, and alloyed with copper Cu.} 
 \end{table}
+\clearpage
+
+
+
+
+
+
+
 
 \section{Analysis and Conclusion}
+
+The initial Permalloy simulation figure 4, shows great promise as the bands are thin. Low scattering and high spin lifetime, however desirable for JMRAM, have to be balanced with the magnetisation of the 
+
+
+
+
+
+
+
+
 
 
 
