@@ -23,7 +23,7 @@ sorting=none
 
 
 
-\title{Self-Consistent Computational methods for investigating the Magnetic and Electrical Properties of Alloys and their application to Spintronic devices}
+\title{Choosing Ferromagnetic Alloys for JMRAM Spintronic Transistors}
 \author{Author: Nikolaos Palamidas \\\\ Supervisor: Professor Mark van Schilfgaarde\\Fourth Year MSci Project 7CCP4000 \\King's College London}
 \date{March 2017}
 
@@ -49,48 +49,17 @@ sorting=none
 
 \section{Introduction}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Global power consumption is continuously increasing, a large portion of which is due to computers and electronic devices. Moore’s law predicts that the number of transistors on a circuit board doubles every two years (since 1971), and while we continue to develop smaller, faster and more efficient transistors, the power consumption is still too high\cite{mram}. This is due mainly to the lack of progress, using roughly the same circuit technology. Currently, the random-access memory(RAM), used in most personal computers is Dynamic RAM (DRAM). DRAM uses a capacitor like transistor that stores logic states by the amount of charge stored on plates. While this method is cheap and easy to produce, DRAM faces many problems. Firstly, DRAM is volatile memory, so if bit states are not changed for an extended period of time, or if power to the DRAM is lost, the capacitor discharges and memory is lost. For this reason, new technologies must be developed, and there is great hope in the field of Spintronics\cite{fundapp}. This technology uses the intrinsic angular momentum properties of electrons to store bit logic states. A relatively heavily tested spintronic transistor is the magnetoresistive RAM(MRAM). Two ferromagnetic plates are constructed adjacent to each other, one with a fixed magnetisation direction, and the other with parallel or antiparallel magnetisation, to be flipped by the application of an external magnetic field. This setup is referred to as a magnetic tunnelling junction(MTJ).  The current passing through these layers will encounter a low or high resistance depending on the relative parallel or antiparallel magnetisation configuration of the layers. While the MRAM is more efficient and a lot of research\cite{mram} has been done, it is still inefficient and slow. We require a faster memory switching, especially in the potential advent of quantum computing. 
+\\This report focuses on the theoretical development of superconducting MRAM, also known as JMRAM. It is physically like the MRAM, but now the MTJ is sandwiched between superconducting layers, and the ferromagnetic layer is also electrically insulating.  Now the physics of the magnetoresistance is still applicable but now to supercurrents (currents that flow without dissipation), which allows for fast information transfer. By use of the Josephson effect\cite{josephson}, the superconducting cooper pairs\cite{BCS} quantum tunnel through the acquire a phase when moving through the ferromagnetic insulating layer. For fast switching, we require the magnetisation of the free layer to be reduced. We also require the property that the layers have a small magnetostriction to reduce scattering. A calculation of the Curie temperature must also be carried out to indicate under which temperatures the layers stay ferromagnetic.
+\\
+Constructing these MTJs with different alloy configurations and testing them all experimentally is very time-consuming, expensive, and labour intensive. We look to computational simulations using solid state physics to predict properties of different alloy configurations, without the need for any experimental investigation. In this report, the theory of Linear Muffin-Tin Orbitals (LMTOs) developed by O.K. Andersen \cite{andersen} is exploited to provide a basis set to describe the electronic structure in metal alloys. The LMTO basis set is used in the self-consistent Density Functional theory (DFT) introduced by Hohenberg and Kohn \cite{inhom}, to construct the ground state properties of the alloy. A Green’s function approach to calculate physical observables is used, particularly the use of the Bloch spectral function, which plots the bands of the alloy. Random alloys simulation requires the use of the coherent potential approximation(CPA)\cite{drchal}, which uses the configurational average of the Green's function to calculate observabled, to account for the random order in the system. All these methods are contained in the ‘lmgf’ code in the QUESTAAL suite \cite{ques}.
+\\
+By application of these computational methods to predict electronic structure properties of different alloy configurations, the aim of the report is to choose an ideal alloy configuration, applicable for JMRAM transistor technologies.
 
 \section{Density Functional Theory}
 
 \subsection{The Kohn-Sham Equation}
-The Hohenberg-Kohn theorems form the backbone of density functional theory (DFT) \cite{inhom}. This theory is to exactly describe any many body system. It can be show very easily \cite{martin}, that the ground state electron density $n_0(r)$, once found, uniquely determines the external(full) potential of the interacting system of electrons, whatever it may be. The second crucial idea, is that the energy of the system is a functional of the electron density i.e. $E[n(r)]$. By varying n(r), and one can determine the ground state density and therefore energy $E_0[n_0(r)]$.
+The Hohenberg-Kohn theorems form the backbone of density functional theory (DFT) \cite{inhom}. This theory is to exactly describe any many body system. It can be show very easily \cite{martin}, that the ground state electron density $n_0(r)$, once found, uniquely determines the external(full) potential of the interacting system of electrons, whatever it may be. The second crucial idea, is that the energy of the system is a functional of the electron density i.e. $E[n(r)]$. By varying n(r), and one can determine the ground state density and therefore ground state energy $E_0[n_0(r)]$.
 We can write the energy functional in terms of the external potential, the kinetic energy and the electron electron interaction term. It has to be said that all of these equations are in respect to some interacting reference frame.
 \begin{equation} \label{2.1} \tag{2.1}
 E[n]=\int V\textsubscript{ext}(r)n(r)d^3r + T[n] + V_\textsubscript{ee}[n]
@@ -110,49 +79,49 @@ H_s\psi_i = \sum_{i=1}^{N} [-\frac{\hbar^2}{2m}\nabla_i ^2 + V_s(r_i)] \psi_i \q
 
 Of course it has to be said that $\psi_i$ is not exactly the single electron wavefunction, in the same way that H\textsubscript{s} is not exactly the full many body Hamiltonian and $V_s \neq V\textsubscript{ext}$. Instead the interactions are absorbed into the augmented Sham values. The sham kinetic energy will be
 \begin{equation} \label{2.5} \tag{2.5}
-T_s[n]=\sum_{i=1}^{N} -\frac{\hbar^2}{2m}\nabla^2\ket{\psi_i}
+T_s[n]=\sum_{i=1}^{N} \bra{\psi_i}-\frac{\hbar^2}{2m}\nabla^2\ket{\psi_i}
 \end{equation}
 
-For the Kohn-Sham equation, we take the augmented $T_s$ to be the real and exact $T_s$ for the many body system. Of course something needs to balance this out as the interaction component needs to be absorbed in another term, which is called the exchange-correlation energy $E_X_C[n]$. Let us expand the electron-electron interaction more formally into the standard Hartee-Fock potential and the remaining contribution (origins in electron exchange and correlation) $\xi_{ee}$.
+For the Kohn-Sham equation, we take the augmented $T_[n]s$ to be the real and exact $T[n]$ for the many body system. Of course something needs to balance this out as the interaction component needs to be absorbed in another term, which is called the exchange-correlation energy $E_X_C[n]$. Let us expand the electron-electron interaction more formally into the standard Hartee-Fock potential and the remaining contribution (origins in electron exchange and correlation) $\xi_{ee}$.
 \begin{equation} \label{2.6} \tag{2.6}
 V_e_e[n] =V_{hartree}+V_{unknown}=\frac{1}{2}\int \int \frac{n(r)n(r')}{|r-r'|} + \xi_{ee}
 \end{equation}
 
 
 Now let us define the exchange correlation in terms of something we know, namely the full many body energy (in the interacting frame) made up of the kinetic and potential terms. On the RHS we have the sham kinetic energy, the classical electron electron repulsion, and have the exchange correlation at the end as a sort of 'sponge' for any interaction components that might be needed to describe the many-body system fully. Upon imposing that $T_s=T$
-\begin{equation} \label{2.6} \tag{2.6}
+\begin{equation} \label{2.6} \tag{2.7}
 E[n]_{total}=T[n]+V_e_e[n] = T_s[n] + \frac{1}{2}\int \int \frac{n(r)n(r')}{|r-r'|}d^3 r' + E_X_C[n]
 \end{equation}
-And with simple substitution leads to the fundamental equation
-\begin{equation} \label{2.7} \tag{2.7}
+And with simple substitution of (2.7) leads to the fundamental equation
+\begin{equation} \label{2.7} \tag{2.8}
 E_X_C[n]=T[n] -T_s[n] + \xi_{ee}[n]
 \end{equation}
 
 This last equation is an important result as it intuitively shows us what the exchange correlation energy means. It can be thought of as the difference in the real kinetic energy of the whole system and the Sham kinetic energy term of the non interacting system. We know that the interacting electrons are in a potential V\textsubscript{ext}(r), but what auxiliary potential could the non-interacting electrons be in? This shall be called the effective potential $V_e_f_f[n]$. We wish to apply the variational principle to the energy in the interacting $E_i[n]$ and non interacting frame $E_n_i[n]$ upon changing the electron density:
-\begin{equation} \label{2.8} \tag{2.8}
+\begin{equation} \label{2.8} \tag{2.9}
 E_i=\int V_e_x_tn(r)d^3r + \frac{1}{2}\int \int \frac{n(r)n(r')}{|r-r'|}d^3 r' + T_s[n]+E_X_C[n]
 \end{equation}
-\begin{equation} \label{2.9} \tag{2.9}
+\begin{equation} \label{2.9} \tag{2.10}
 E_n_i[n]= \int V_{eff} n(r)d^3r + T_s[n]
 \end{equation}
 
 Now we apply the variational principle to both quantities. 
-\begin{equation} \label{2.10} \tag{2.10}
+\begin{equation} \label{2.10} \tag{2.11}
 \frac{\delta E_i[n]}{\delta n} = V_{ext}(r) + \int \frac{2n(r')}{|r-r'|}d^3r'  +\frac{\delta T_s[n]}{\delta n} + \frac{\delta E_X_C[n]}{\delta n}
 \end{equation}
-\begin{equation} \label{2.11} \tag{2.11}
+\begin{equation} \label{2.11} \tag{2.12}
 \frac{\delta E_n_i[n]}{\delta n}= V_e_f_f(r) + \frac{\delta T_s[n]}{\delta n}
 \end{equation}
 
 Equating the two quantities above we obtain the effective potential in terms of the external potential.
-\begin{equation} \label{2.12} \tag{2.12}
+\begin{equation} \label{2.12} \tag{2.13}
 V_e_f_f(r)=V_e_x_t(r)  +\int \frac{2n(r')}{|r-r'|}d^3r' + \frac{\delta E_X_C[n]}{\delta n}
 \end{equation}
 
 So to summarise, in the real interacting frame the electrons act in  V\textsubscript{ext}(r) and in the auxiliary non interacting frame the electrons act in some $V_e_f_f[n]$ to be determined.
 
 The full Kohn-Sham equation is just an modification to the full Schrodinger equation to include the terms discussed.
-\begin{equation} \label{2.12} \tag{2.13}
+\begin{equation} \label{2.12} \tag{2.14}
 H_s \psi_i (r) = (-\frac{\hbar^2}{2m}\nabla^2 +V_e_f_f(r) ) \psi_i (r) = \epsilon_i \psi_i (r)
 \end{equation}
 
@@ -162,7 +131,7 @@ DFT is a computational method, and to use the variational principle to obtain a 
 
 \subsection{L(S)DA}
 
-The Local spin density approximation (LSDA) is a candidate for the E\textsubscript{XC}. For a simple system with same spin value everywhere we simply use the local density approximation (LDA). While there are many approaches to the functional, the most succesful is that of the homogeneous electron gas (HEG or Jellium). %insert reference to electronic structure
+The Local spin density approximation (LSDA) is a candidate for the E\textsubscript{XC}. For a simple system with no spin polarisation the local density approximation(LDA) is used instead. While there are many approaches to the functional, the most succesful is that of the homogeneous electron gas (HEG or Jellium).\cite{inhom}\cite{martin}
 We define that
 $$E_X_C[n(r)]=\int n(r) \varepsilon_X_C[n(r)] dr$$
 From the equation it is clear that the $\varepsilon$ is an energy density. L(S)DA is the name given to a whole set of methods where the exchange correlation energy per particle $\varepsilon_X_C$ is uniquely determined by the electron density at a given position n(r), so that $\varepsilon_X_C[n(r)]$.
@@ -194,7 +163,7 @@ The second equation is the Laplace equation, the 3D solution to which is Hankel 
 \bigg[-\frac{\partial^2}{\partial r^2}-\frac{2}{r}\frac{\partial}{\partial r}+\frac{l(l+1)}{r^2} \bigg]R_l(r)=0
 \end{equation}
 
-Now comparing to Bessel's differential equation, we obtain well defined finite solutions at large r (regular solutions $J_l(r)$) and some that tend to infinities at large r (irregular solutions $K_l(r)$). These are referred to as Bessel (first kind) and Hankel functions (or Bessel functions of the third kind) respectively. 
+Now comparing to Bessel's differential equation, we obtain well defined finite solutions at large r (regular solutions $J_l(r)$) and some that tend to infinities at large r (irregular solutions $K_l(r)$). These are referred to as Bessel (first kind) and Hankel functions (or Bessel functions of the third kind) respectively. Equation (3.4) is given in \cite{turek}. 
 \begin{equation} \label{3.4} \tag{3.4}
 J_l(r)=\frac{1}{2(2l+1)}\bigg(\frac{r}{\omega}\bigg)^l \qquad K_l(r)=\bigg(\frac{\omega}{r}\bigg)^{l+1}
 \end{equation}
@@ -214,38 +183,38 @@ D[f(r)]= r \frac{f'(r)}{f(r)} \qquad where \quad f'(r)=\frac{df(r)}{dr}
 
 Now, it is pretty obvious that in the case where we have just one single atomic sphere, the inside solution is a regular solution J(solves Schrodinger) and outside it is the irregular solution K (solves Laplace). 
 Of course to represent any physical system, consisting of many close-packed sites, we must somehow sum over the contributions of each site. In this way, a mathematical backbone as to how to construct the overall combination of J and K must be understood first.
-Since we require f(r\textsubscript{s}) and f'(r\textsubscript{s}) to match, we look to implementation of the Wronskian, defined as follows.
+Since we require f(r\textsubscript{s}) and f'(r\textsubscript{s}) to match, we look to implementation of the Wronskian (3.6). The prime on the function f'(r) indicates differentiation with respect to r.
 \begin{equation} \label{3.6} \tag{3.6}
 \{f_1(r),f_2(r)\}= r^2 \big(f_1(r)f_2'(r)-f_1'(r)f_2(r)\big)=rf_1(r)f_2(r) (D[f_2(r)]-D[f_1(r)])
 \end{equation}
 
-From now on, the (r) on the function will be omitted for brevity. There exists also a general and important rule for a product of Wronskians, which is as follows
+From now on, the (r) on the function will be omitted for brevity. There exists also a general and important rule for a product of Wronskians, which is 
 \begin{equation} \label{3.7} \tag{3.7}
 \{f_1,f_2\}\{f_3,f_4\}=\{f_1,f_3\}\{f_2,f_4\}-\{f_1,f_4\}\{f_2,f_3\}
 \end{equation}
 
-A critical equation now is to understand how to match a function f(r) to some linear combination of $f_1(r)$ and $f_2(r)$ at a point $r=s_R$.MORE DETAIL. So at the sphere boundary, we impose the condition that
+A critical equation now is to understand how to match a function f(r) to some linear combination of $f_1(r)$ and $f_2(r)$ at a point $r=a$. So at the sphere boundary, we impose the condition that
 \begin{equation} \label{3.8} \tag{3.8}
-f(r)\{f_1,f_2\}|_{s_R}=f_1(r)\{f,f_2\}|_{s_R}-f_2(r)\{f_1,f_2\}|_{s_R}
+f(r)\{f_1,f_2\}|_{a}=f_1(r)\{f,f_2\}|_{a}-f_2(r)\{f_1,f_2\}|_{a}
 \end{equation}
-By the definitions of J and K (3.4), it is obtained by simple differentiation and rearrangement that 
+By the definitions of J and K (3.4), it is obtained by simple differentiation and rearrangement that the Wronskian of J and K evaluated at any point is constant.
 \begin{equation} \label{3.9} \tag{3.9}
 \{J_l,K_l\}=-\frac{\omega}{2}
 \end{equation}
 
-Now practically we require that some radial part of the wavefunction contained within an atomic sphere $\varphi_R_l(r,E)$ be matched smoothly and differentiably onto a linear combination of regular and irregular solutions outside the sphere. So we use (3.8,3.9) to obtain
+Now practically we require that some radial part of the wavefunction contained within an atomic sphere $\varphi_R_l(r,E)$ be matched smoothly and differentiably onto a linear combination of regular and irregular solutions outside the sphere, at the sphere boundary r=s. So we use (3.8,3.9) to obtain
 \begin{equation} \label{3.10} \tag{3.10}
-\varphi_R_l(r,E)=\frac{\{\varphi,K\}|_{s_R}J_l(r)-\{\varphi,J\}|_{s_R}K_l(r)}{\{J,K\}|_{s_R}}=\frac{2}{\omega}\bigg(\{\varphi,J\}|_{s_R}K_l(r)-\{\varphi,K\}|_{s_R}J_l(r)\bigg)
+\varphi_R_l(r,E)=\frac{\{\varphi,K\}|_{s}J_l(r)-\{\varphi,J\}|_{s}K_l(r)}{\{J,K\}|_{s}}=\frac{2}{\omega}\bigg(\{\varphi,J\}|_{s}K_l(r)-\{\varphi,K\}|_{s}J_l(r)\bigg)
 \end{equation}
 
-Now we define two new functions that will become very important for the entire LMTO method, and for subsequent green's functions calculations. We want to match a function $\varphi(r,E)$ continuously and differentiably onto a linear combination of some other two functions K(r) and J(r) at the sphere boundary r=s\textsubscript{R}. 
+Now we define two new functions that will become very important for the entire LMTO method, and for subsequent green's functions calculations. We want to match a function $\varphi(r,E)$ continuously and differentiably onto a linear combination of some other two functions K(r) and J(r) at the sphere boundary $r=s$. 
 %%put shit here use http://itp.uni-frankfurt.de/~valenti/CHAP5_two.pdf
 Here I use the definitions for the Potential and Normalisation functions as given in \cite{turek}. We also use the rule (3.6) to further expand (3.11,3.12).
 \begin{equation} \label{3.11} \tag{3.11}
-P_R_l(E)=\frac{\{K_l,\varphi_R_l\}|_{s_R}}{\{J_l,\varphi_R_l\}|_{s_R}}=2(2l+1)\bigg(\frac{\omega}{s_R}\bigg)^{2l+1} \frac{D_R_l(E)+l+1}{D_R_l(E)-l}
+P_R_l(E)=\frac{\{K_l,\varphi_R_l\}|_{s}}{\{J_l,\varphi_R_l\}|_{s}}=2(2l+1)\bigg(\frac{\omega}{s}\bigg)^{2l+1} \frac{D_R_l(E)+l+1}{D_R_l(E)-l}
 \end{equation}
 \begin{equation} \label{3.12} \tag{3.12}
-N_R_l(E)=\frac{\omega}{2}\frac{1}{\{\varphi_R_l,J_l\}|_{s_R}}=(2l+1)\bigg(\frac{\omega}{s_R}\bigg)^{l+1} \frac{1}{\varphi_R_l(s_R,E)} \frac{1}{l-D_R_l(E)}
+N_R_l(E)=\frac{\omega}{2}\frac{1}{\{\varphi_R_l,J_l\}|_{s}}=(2l+1)\bigg(\frac{\omega}{s}\bigg)^{l+1} \frac{1}{\varphi_R_l(s,E)} \frac{1}{l-D_R_l(E)}
 \end{equation}
 
 Motivation for this choice is not obvious, until one can see that now the matching condition at s\textsubscript{R} (3.10) can be rewritten as
@@ -377,8 +346,8 @@ In this representation the Orthogonal matrix elements do not contribute to (3.23
 $$C_{RL}=E_{\nu RL}-\frac{\{K,\phi\}_R_L}{\{K,\dot{\phi}\}_R_L}$$
 $$\Delta_{RL}=\frac{\omega}{2} \frac{1}{\{K,\dot{\phi}\}^2_{RL}}$$
 $$\gamma_{RL}=\frac{\{J,\dot{\phi}\}_{RL}}{\{K,\dot{\phi}\}_{RL}}$$
-As usual, all wronskians are evaluated at the atomic sphere radius r=s. One notices in this orthogonal representation of the Hamiltonian matrix, the orthogonal matrix is null, hence the name. This now forms the basis for constructing the Green's function for one such system. 
-
+As usual, all wronskians are evaluated at the atomic sphere radius r=s. One notices in this orthogonal representation of the Hamiltonian matrix, the orthogonal matrix is the identity, hence the name. This now forms the basis for constructing the Green's function for one such system. 
+\clearpage
 \section{Green's Function approach}
 \subsection{What and why?}
 
@@ -396,7 +365,7 @@ where the last step is application of the filtering theorem of the Dirac-delta. 
 
 In physics, when we refer to the Green's function, we mean the Green's function of the Hamiltonian. In other words, the energy solutions to the Hamiltonian, are the poles of the Green's function, so that $(E-H)G=1$ where E is some complex energy. To relate to our definition earlier,
 \begin{equation} \label{4.1} \tag{4.1}
-[E+\Delta -V(r)]G(r,r';E)=\delta (r-r')
+[E+\nabla^2 -V(r)]G(r,r';E)=\delta (r-r')
 \end{equation}
 
 Assuming an orthonormal basis of eigenfunctions that satisfy $H\ket{\psi_i}=\epsilon_i \ket{\psi_i}$ then we obtain that 
@@ -483,9 +452,9 @@ To construct any sort of alternative to band structure, we must talk in terms of
 G_{AL,A'L'}(k,E)=\int G_{AL,(A'+T)L'}(r,E)e^{i\vec{k}\cdot \vec{T}} d\vec{k}
 \end{equation}
 
-Now that we have defined the Green's function in reciprocal k-space, we can adopt a method analogous to that of the energy resolved charge density in real space (4.13)
+Now that we have defined the Green's function in reciprocal k-space, we can adopt a method analogous to that of the energy resolved charge density in real space (4.13), and define the Bloch spectral function\cite{drchal} $\mathcal{A}(k,\omega)$:
 \begin{equation} \label{4.1} \tag{4.16}
-\mathcal{A}(k,E)=-\frac{1}{\pi} \sum_L G(k,E+i0^+)
+\mathcal{A}(k,E)=-\frac{1}{\pi} Im[\sum_L G(k,E+i0^+)_L_L]
 \end{equation}
 In the CPA case of a random alloy, the G(k,E) would be replaced with the configurationally averaged $\expval{G(k,E)}$ (calculated by CPA). The spectral function is vital for construction of band structure for materials where translational invariance and conventional band calculations are no longer valid. The spectral function scans all momenta, and peaks at excitation energies, which plots the bands.
 
@@ -510,27 +479,30 @@ We now wish to perform a configurational average of the site-diagonal green's fu
 \\ 
 The important aspect of this approximation is replacing the potential function P(E) with some constant (for a given complex energy E) which describes the configurationally averaged Green's function, or in other words a potential function that describes some auxiliary system in which there are no fluctuations. Let us recall the (4.11) and define the configurationally averaged auxiliary green's function.
 \begin{equation} \label{4.1} \tag{5.2}
-\expval{g_{RR'}(E)}=[\mathcal{P}(E)-S]^{-1}_{RR'}
+\expval{g_{RL,R'L'}(E)}=[\mathcal{P}(E)-S]^{-1}_{RL,R'L'}
 \end{equation}
 
-This is how we define the Coherent potential $\mathcal{P}_{RR'}(E)$. One aspect to make calculations easier is the single-site approximation. One aspect is neglecting all site non-diagonal quantities so $\mathcal{P}_{RR'}(E)\delta_{RR'}=\mathcal{P}_{RR}(E)$\cite{turek}, as well as not including any influence from neighbouring sites. The system we wish to probe in the later chapters is that of a ferromagnetic insulating layer which is made of a 2 or 3 component alloy. 
+This is how we define the Coherent potential $\mathcal{P}_{RR'}(E)$. One aspect to make calculations easier is the single-site approximation. One aspect is neglecting all site non-diagonal quantities(random complicated quantities\cite{drchal}) so $\mathcal{P}_{RR'}(E)\delta_{RR'}=\mathcal{P}_{RR}(E)$\cite{turek}, as well as not including any influence from neighbouring sites. The system we wish to probe in the later chapters is that of a ferromagnetic insulating layer which is made of a 2 or 3 component alloy. 
 \\Let's return to the binary 2-component alloy, consisting of atom species A and B. For each of these sub-lattices, there is an associated coherent potential $\mathcal{P}^A$ and $\mathcal{P}^B$. The essence of the CPA single site approximation, is focus on one reference site at position R, with probability to be A or B, $c_R^A$ or $c_R^B=1-c_R^A$. Every other site R', is described by its own 2 coherent potentials $\mathcal{P}_{R'}^{A,B}(E)$. We use now the KKR multiple scattering theory discussed in the chapter on Green's function, and recall that the scattering T-matrix (4.8) $T=(1-UG^0)^{-1}U$. The unperturbed Green's function is configurationally averaged auxiliary Green's function $\expval{g(E)}_{RR}$ and the perturbation U is the difference in the real potential function and the coherent one. 
 \\
 It is now very important to look at what the CPA is actually doing. The disordered system of fluctuating potential alloy is represented by some pseudo-system where there are no fluctuations and all atoms move coherently in $\mathcal{P}$. We wish to see what happens to the system upon embedding of an A or B atom into the effective CPA medium. The CPA condition is that on average there is no extra scattering by introduction of an extra A or B atom into the effective medium. The scattering T-matrix (4.8) is the total scattering, but if we introduce the concept of non overlapping individual scatterers for each site, we can rewrite T(E) as the sum of individual scatterers $t_i(E)$
 $$T(E)=\sum_it_i(E)$$
 
-In our 2 component system Q=A,B, in the CPA regime we have a perturbation by the difference in real potential (Q species dependant) and coherent (unperturbed or bare) potential for obvious reasons. We define this quantity as $$\Delta^Q_R=P_R^Q-\mathcal{P}_R$$. Also in CPA, the unperturbed Green's function is replaced with the configurationally averaged one. We can now write the single site scatterer T-matrix element as 
+In our 2 component system Q=A,B, in the CPA regime we have a perturbation by the difference in real potential (Q species dependant) and coherent (unperturbed or bare) potential for obvious reasons. We define this quantity as $$\Delta^Q_R=P_R^Q-\mathcal{P}_R$$. Also in CPA, the unperturbed Green's function is replaced with the configurationally averaged one. We can now write the single site scatterer T-matrix element(4.8) as 
+\begin{equation} \label{4.1} \tag{5.3}
+t_R^Q(E)=\Delta^Q_R\bigg[1+\expval{g_{RR}}(E)\Delta^Q_R\bigg]^{-1}
+\end{equation}
 
-$$t_R^Q(E)=\Delta^Q_R\bigg[1+\expval{g_{RR}}(E)\Delta^Q_R\bigg]^{-1}$$
+Probably the most crucial feature of the effective CPA medium is that, upon embedding an atom of type Q into it, that all average scattering vanishes. It is this crucial condition that allows computational calculation of the coherent potential. Mathematically this condition is written as \cite{turek}.
+\begin{equation} \label{4.1} \tag{5.4}
+\sum_Qc_R^Qt_R^Q(E)=0
+\end{equation}
 
-Probably the most crucial feature of the effective CPA medium is that, upon embedding an atom of type Q into it, that all average scattering vanishes. It is this crucial condition that allows computational calculation of the coherent potential. Mathematically this condition is written as \cite{turek}
-$$\sum_Qc_R^Qt_R^Q(E)=0$$
-
-\section{The Theory behind JMRAM devices}
+\section{Spintronics and the JMRAM}
 \subsection{Introduction}
 
-Current Random Access Memory(RAM) technology, is named Dynamic RAM (DRAM), and consists of storing Bits by charge on a capacitor, where its state of charge/discharge stores the logic state 1/0. DRAM is the current technology used for main computer memory, but it has problems. For instance, DRAM is volatile, meaning that without power (or changes in bit storage), the capacitor slowly discharges and memory is lost. An alternative proposition called Magnetoresistive RAM (MRAM), is a non-volatile type of RAM that is currently in development. It works on the idea of magnetoresistance, where there is a pinned magnetic layer of a fixed magnetic moment, an insulator that acts as a tunnel barrier, and a free (changes magnetic moment) magnetic layer. By quantum tunneling, an electron may pass from the fixed layer to the free layer. By magnetoresistance (discussed in more detail below), parallel layer moments cause low resistance, and anti-parallel moments cause high resistance, denoting the two logic states. However, in the possible advent of quantum computers, the world requires a much faster type of memory, and one which is very efficient.
-
+Current Random Access Memory(RAM) technology, is named Dynamic RAM (DRAM), and consists of storing Bits by charge on a capacitor, where its state of charge/discharge stores the logic state 1/0. DRAM is the current technology used for main computer memory, but it has problems. For instance, DRAM is volatile, meaning that without power (or changes in bit storage), the capacitor slowly discharges and memory is lost. An alternative proposition called Magnetoresistive RAM (MRAM), is a non-volatile type of RAM that is currently in development\cite{mram}. It works on the idea of magnetoresistance, where there is a pinned magnetic layer of a fixed magnetic moment, an insulator that acts as a tunnel barrier, and a free (changes magnetic moment) magnetic layer. By quantum tunneling, an electron may pass from the fixed layer to the free layer. By magnetoresistance (discussed in more detail below), parallel layer moments cause low resistance, and anti-parallel moments cause high resistance, denoting the two logic states. However, in the possible advent of quantum computers, the world requires a much faster type of memory, and one which is very efficient.
+\clearpage
 \subsection{Anatomy of an MTJ}
 
 JMRAM, consists of a Magnetic Tunnel Junction (MTJ), and the read and write word lines that connect the MTJ to the rest of the circuitry. Practical implementation of the MTJ in the circuitry is ignored in this report, with focus on the physics of the MTJ itself.
@@ -538,17 +510,16 @@ JMRAM, consists of a Magnetic Tunnel Junction (MTJ), and the read and write word
 \begin{figure}[htp]
     \centering
     \begin{measuredfigure}
-    \includegraphics[width=10cm]{mtj}
-    \caption{A very basic construction of an MTJ}
+    \includegraphics[width=12cm]{mtj}
+    \caption{A very basic construction of an MTJ, consisting of a fixed(pinned) magnetisation layer, and free layer where magnetisation can be flipped via an external magnetic field.}
     \end{measuredfigure}
     \end{figure} 
     
-JMRAM works on the principle of the Josephson effect. In this phenomenon, two superconductors, separated by a ferromagnetic insulating layer (referred to as FI from here onwards), can transmit (super)current. This is because the cooper pair of electrons formed in the superconductor, tunnels through the insulating layer. $Cu_x(Ni_80Fe_20)_{1-x}$. 
+JMRAM works on the principle of the Josephson effect\cite{josephson}. In this phenomenon, two superconductors, separated by a ferromagnetic insulating layer (referred to as FI from here onwards), can transmit (super)current. This is because the Cooper pair of electrons formed in the superconductor, tunnels through the ferromagnetic layer, but it does so in a particularly interesting way due to the environmental magnetic moment.
 
 \subsection{Quantum Transport}
 
 It is well known, due to BCS theory \cite{BCS} that electrons in certain materials, below some transition temperature, form bound state singlet Cooper pairs. The pairs can also exist in triplet pairs in more exotic cases such as the superfluidity of Helium-3, but in regular metals where electrons are bound by electron-phonon mediated interactions, Cooper singlet states are formed. The Ferromagnetic insulators (FI) in the MTJ act as what are known as ``Half-Metals" (HM) \cite{HM}, which split the density of states N(E) of majority and minority (up and down) spin carriers by the Zeeman shift as a result of the chosen direction of magnetic field as shown in figure 2. 
-
 \begin{figure}[htp]
     \centering
     \begin{measuredfigure}
@@ -556,7 +527,6 @@ It is well known, due to BCS theory \cite{BCS} that electrons in certain materia
     \caption{Splitting of the majority and minority DOS N(E), due to the Zeeman effect, leading to tunnel magnetoresistance. Taken directly from \cite{fundapp}}
     \end{measuredfigure}
     \end{figure}
-\\
 As a consequence of N(E) splitting, anti-parallel spin alignment between the superconducting electron (one of the pairs) and the FI magnetisation direction, results in an increase in the number of scattering channels, resulting therefore in increased magnetoresistance. By the same mechanism, parallel spin alignment results in a reduced magnetoresistance. It is this physical concept that is the heart of the MTJ. In this way, the Cooper pair could become unbound upon transmission to the FI layer. The electron with anti parallel spin quantisation direction to the ferromagnetic layer, would experience a Lorentz force. In this unstable state, the electron would like to align with the local environment's magnetic field. For Cooper pair transport through a superconductor-halfmetal\cite{HM} interface, the pair must "rotate" and pick up a phase, if it is to survive in the external magnetic field. The singlet pair is expressed as $\Psi=\frac{1}{\sqrt{2}}(\ket{\updownarrows}_{k,-k}- \ket{\downuparrows}_{k,-k}$, where the opposite electrons also have opposite but equal momentum (k,-k)\cite{BCS}. A phase difference upon reflectance must occur upon ferromagnetic layer transmission where $\ket{\uparrow}_{-k}=e^{i\theta/2}\ket{\uparrow}_k$ and $\ket{\downarrow}_{-k}=e^{-i\theta/2}\ket{\downarrow}_k$ \cite{contact}. Therefore the singlet state will now transform to
 \begin{equation} \label{4.1} \tag{6.1}
 \Psi=\frac{1}{\sqrt{2}}[e^{i\theta}\ket{\updownarrows}_{k,-k}- e^{-i\theta}\ket{\downuparrows}_{k,-k}]
@@ -566,8 +536,8 @@ Now we see that the spin singlet can penetrate and survive the FI interface only
 \begin{figure}[htp]
     \centering
     \begin{measuredfigure}
-    \includegraphics[width=10cm]{rot}
-    \caption{The spin (intrinsic angular momentum) rotation of a particle upon transmission through the superconductor-ferromagnet interface where a magnetic field permeates}
+    \includegraphics[width=15cm]{rot}
+    \caption{The spin (intrinsic angular momentum) rotation of a particle upon transmission through the superconductor-ferromagnet interface where a magnetic field permeates.}
     \end{measuredfigure}
     \end{figure}
 
@@ -580,15 +550,15 @@ The MTJ that is being tested in this report, uses the superconducting material N
 \\
 The free layer FI, must have low magnetostriction, that is to be able to switch magnetisation direction with a weak magnetic field, but of course not so weak that any background fields could affect the layer. The cause of the magnetostriction is anisotropy a magnetic material, causing it to easily magnetise in one direction but with more resistance in the other. Anisotropy can occur from complex spin-orbit coupling in the bulk (magnetocrystaline) and the physical dimensions of the material itself and how it is manufactured (shape). By choosing a material with low magnetocrystaline anisotropy, the shape anisotropy becomes the key factor in determining magnetostriction, which can be tuned, to construct a favourable MTJ. 
 \\
-Another factor is the spin lifetime through the layer, as impurities and defects may break the cooper pair. It has been found in (FIND PLS) that the lifetime $\tau$ is dependant on the inverse bandwidth (blurryness) at a high symmetry point (usually X) at the Fermi energy E\textsubscript{F}.
+Another factor is the spin lifetime through the layer, as impurities and defects may break the cooper pair. It has been found in (FIND PLS) that the lifetime $\tau$ is dependant on the inverse bandwidth(blurryness of spectral function) at a high symmetry point (usually X) at the Fermi energy E\textsubscript{F}. While this isn't quantitatively explored from the spectral data (discussed later), it is inferred from the band plots.
 \\
-We also wish to reduce the unfavorable scattering at the FI interface, which can be reduced by choosing a superconducting material with the same crystal structure and similar unit cell length to that of the FI layer. For instance Nb is BCC \cite{ashcroft} and Permalloy is FCC, so perhaps a better alloy ratio and choice is needed to create a more efficient MTJ. For example lead (Pb) is a BCS superconductor that has FCC crystal structure\cite{ashcroft} and a decent transition temperature of 7.19K.
+We also wish to reduce the unfavorable scattering at the FI interface, which can be reduced by choosing a superconducting material with the same crystal structure and similar unit cell length to that of the FI layer. For instance Nb is BCC \cite{ashcroft} and Permalloy is FCC, so perhaps a better alloy ratio and choice is needed to create a more efficient MTJ. For example lead (Pb) is a BCS superconductor that has FCC crystal structure\cite{ashcroft} and a decent transition temperature of 7.19K. A band plot of the pure superconducting material will be compared to the spectral function of the random alloy to see how much they line up.
 
-\subsection{Magnetic exchange}
+\subsection{Ferromagnetic Origins}
 
-At the temperatures below the Curie temperature T\textsubscript{C}, the lattice spin sites, order and align in the same parallel direction, creating an overall macroscopic magnetic moment (magnetisation). The origin order arises from a quantum mechanical effect called the exchange interaction, and determines the T\textsubscript{C}.. 
+At the temperatures below the Curie temperature T\textsubscript{C}, the lattice spin sites, order and align in the same parallel direction, creating an overall macroscopic magnetic moment (magnetisation). The origin order arises from a quantum mechanical effect called the exchange interaction, and determines the T\textsubscript{C}. 
 \\
-Exchange interaction is not a force, but more of a bias towards having spins of the same spin to keep down the energy cost. Let us consider the singlet (s=0) and triplet (s=1) wavefunctions. The total Fermionic wavefunctions must be antisymmetric under particle exchange, giving rise to the following spatial and spinoral components of the wavefunction. Here the subscrips S and AS stand for symmetric and antisymmetric respectively (under particle exchange).
+Exchange interaction is not a force, but more of a bias towards having spins of the same spin to keep down the energy cost. Let us consider the singlet (s=0) and triplet (s=1) wavefunctions. The total Fermionic wavefunctions must be antisymmetric under particle exchange, giving rise to the following spatial and spinoral components of the wavefunction. Here the subscripts S and AS stand for symmetric and antisymmetric respectively (under particle exchange).
 \begin{equation} \label{4.1} \tag{6.2}
 \Psi_{singlet}(r_1,r_2)=\psi_{AS}\chi_S \qquad \Psi_{triplet}(r_1,r_2)=\psi_{S}\chi_{AS}
 \end{equation}
@@ -602,7 +572,7 @@ E_s=\expval{H}_{singlet}=\int \Psi_s^*\hat{H}\Psi_sdr_1dr_2 \qquad E_t=\expval{H
 
 
 We know that from spin operator considerations that two coupled spins $S_1\cdot S_2$ have eigenvalues -3/4 and 1/4 for the singlet and triplet states respectively\cite{blundell} due to the following
-$$\expval{2S_1\cdot S_2}=\bra{\Psi}S^2-S_1^2-S_2^2\ket{\Psi}=s(s+1)-2\frac{3}{4}$$
+$$\expval{2S_1\cdot S_2}=\bra{\Psi}S^2-S_1^2-S_2^2\ket{\Psi}=s(s+1)-2*\frac{3}{4}$$
 Now the Hamiltonian for this simple 2 electron system can be written as
 \begin{equation} \label{4.1} \tag{6.4}
 \hat{H}=\frac{1}{4}(E_S-3E_T)-(E_S-E_T)\hat{S_1} \cdot \hat{S_2}
@@ -620,35 +590,37 @@ H^{spin}=-\sum_{\expval{i,j}}J_{ij}S_i \cdot S_j
 \begin{equation} \label{4.1} \tag{6.7}
 H=-\sum_{\expval{i,j}}J_{ij}S_i \cdot S_j-g\mu_BB\sum_iS_i
 \end{equation}
-Here g is the Landè g-factor, $\mu_B$ is the Bohr magneton and B is the magnetic field strength (which defines the z-direction). 
+Here g is the Landè g-factor, $\mu_B$ is the Bohr magneton and B is the magnetic field strength (which defines the z-direction). $J_{ij}$ is the exchange integral/parameter (6.5) between neighbouring spin sites on a lattice, i and j.
 \\
 Now we must link these exchange parameters J to the Curie temperature T\textsubscript{C}. We turn to mean field approximation methods to solve this problem. In this mean field, a spin at site i ($S_i$) experiences an average field of all spins surrounding it ($\expval{S_i}$). Realising $S_i=S_i-\expval{S_i}+\expval{S_i}$, one can expand to first order
 $$S_i\cdot S_j=\expval{S_i}\expval{S_j}+\expval{S_i}(S_j-\expval{S_j}) + \expval{S_i}(S_i-\expval{S_i})$$
 
 Plugging this back in to (6.7), one obtains the mean field Hamiltonian
 \begin{equation} \label{4.1} \tag{6.8}
-H_{mean-field}=\sum_{ij}J_{ij}\expval{S_i}\expval{S_j}-2\sum_{ij}J_{ij}S_i\cdot S_j--g\mu_BB\sum_iS^z_i
+H_{mean-field}=\sum_{ij}J_{ij}\expval{S_i}\expval{S_j}-2\sum_{ij}J_{ij}S_i\cdot S_j--g\mu_BB_z\sum_iS^z_i
 \end{equation}
-Now let us consider the partition function for this system $Z=exp(-H/kT)$ where H is the mean field Hamiltonian, k is Boltzmann's constant and T is temperature. By appreciating that the magnetisation M(T) of the system is the mean field $\expval{S^z_i}$, one can (rather tediously) compute the magnetisation from a Brillouin function approach, and considering the point where magnetisation becomes non-zero, one obtains $T_C=\frac{2(S+1)J_0}{3S}$ which in the classical limit of many spins as $S\rightarrow \infty $, reduces to
+Now let us consider the partition function for this system $Z=exp(-H/kT)$ where H is the mean field Hamiltonian, k is Boltzmann's constant and T is temperature. By appreciating that the magnetisation M(T) of the system is the mean field $\expval{S^z_i}$, one can (rather tediously) compute the magnetisation from a Brillouin function approach, and considering the point where magnetisation becomes non-zero. We assume that the choice of i and j is arbitrary such that $\expval{\hat{S_i}}=\expval{\hat{S_j}}$. We also chose a central point i=0, and define the exchange integral/constant as $J_0=\sum_jJ_{0j}$. Using the proof in \cite{meanfield}
+one obtains $T_C=\frac{2(S+1)J_0}{3S}$ which in the classical limit of many spins as $S\rightarrow \infty $, reduces to
 \begin{equation} \label{4.1} \tag{6.9}
 T_C\approx\frac{2J_0}{3}
 \end{equation}
 The $J_0$ exchange parameter is essential in calculating the T\textsubscript{C}, and is an output of the 'lmgf' code as we shall see in the results section.
+\clearpage
+\section{Electronic Structure Calculations of FI layers}
 
-\section{Electronic Structure calculations of FI layers}
+\subsection{QUESTAAL suite}
 
-\subsection{Introduction}
-
-The "Quasiparticle Electronic Structure and Augmented LMTO" (QUESTAAL) suite developed by Prof. Mark van Schilfgaarde and others \cite{ques}, has been used to obtain all subsequent results. The 'lmgf' code has been used extensively, implementing the theory of the previous chapters. The lmgf uses DFT and Green’s function formalism based on ASA-LMTO discussed previously. Bloch Spectral functions (electronic band structure for translationally invariant systems) can be calculated, and be read to see the effectiveness of the FI layer composition in electron transport. While the Green's function may contain less information than the full Hamiltonian, it allows for computation of many important results. It's ability to be configurationally averaged allows for the CPA implementation which is necessary for progression in alloy inspection. 'lmgf' also allows for calculation of magnetic exchange parameters, which determine the temperature condition necessary for transmission of spin waves through the FI layer. 
+The "Quasiparticle Electronic Structure and Augmented LMTO" (QUESTAAL) suite developed by Prof. Mark van Schilfgaarde and others \cite{ques}, has been used to obtain all subsequent results. The 'lmgf' code has been used extensively, implementing the theory of the previous chapters. The lmgf uses DFT and Green’s function formalism based on ASA-LMTO discussed previously. Bloch Spectral functions (electronic band structure for translationally invariant systems) can be calculated, and be read to see the effectiveness of the FI layer composition in electron transport. While the Green's function may contain less information than the full Hamiltonian, it allows for computation of many important results. It's ability to be configurationally averaged allows for the CPA implementation which is necessary for progression in alloy inspection. 'lmgf' also allows for calculation of magnetic exchange parameters, which determine the temperature condition necessary for transmission of spin waves through the FI layer(effectively Curie temperature). 
 \\
 As discussed in the JMRAM section, the superconducting layers are chosen to be Niobium (Nb), for it's high transition temperature. The FI layer composition, which is generally some appropriate deviation from Permalloy(Py), has been modified and tweaked in many different configurations to choose the most appropriate alloy for a JMRAM's MTJ. Many different quantities become important in alloy choice, and will now be expanded upon.
 
-\subsection{Simulation steps}
+\subsection{Outline of procedure}
 
 A ctrl input file must be constructed first with all relevant initial information about alloy composition, atomic numbers, etc.
-The'lmstr' code is be used to calculate the structure constants necessary for ASA-LMTO (a very quick process). Then 'lmgf' must be used to calculate a self-consistent potential which usually takes a bit of time. Once a potential is found, the 'lmgf' switch --band:fn=syml uses self-consistent CPA to calculate the Omega Potential CHECK THIS WAT. 
+The'lmstr' code is be used to calculate the structure constants necessary for ASA-LMTO (a very quick process). Then 'lmgf' must be used to calculate a self-consistent potential which usually takes a bit of time. Once a potential is found, the 'lmgf' switch --band:fn=syml uses self-consistent CPA to calculate the Omega Potential of CPA theory\cite{turek}.
+\\Firstly, simulations of different Iron-Nickel alloy concentrations were investigated, and by observing the scattering in the spectral function plot, the best is chosen. To quench the magnetic moment, it is alloyed with copper by different amounts to see how much copper would be viable before there was too much scattering. A Curie temperature calculation was also carried out to test up to what temperature the alloy could retain a permanent magnetisation.
+\\Then the procedure was repeated for an Iron-Chromium alloy, and again alloyed with copper. After this the last test is the compatibility of the superconductor-alloy interface. By plotting spectral functions of different superconductors, a quantitative comparison of alloy band structure was performed.
 
-\clearpage
 \subsection{Results}
 
 Many different alloy configurations were tested for their effectiveness as FI layers. Bloch spectral functions must first be plotted for pure Permalloy ($Fe_{20}Ni_{80}$) and analysed. 
@@ -671,14 +643,14 @@ Figure 4 shows that there is very little scattering (blurry/fuzziness) for the m
     \end{figure}
 \clearpage
 Figure 5 shows that with just 20\% copper doping, scattering increases for both channels. The subsequent figures (6,7,8,9) also show the increased scattering through a higher Cu concentration. Interestingly the 80\Cu concentration shows relatively little scattering for both channels. This might be due to computational error.
-\begin{figure}[htp]
+\begin{figure}[h!]
     \centering
     \begin{measuredfigure}
     \includegraphics[scale=0.40]{specfunc/cu40}
     \caption{Plotted Bloch Spectral function for pure Permalloy-Copper alloy $Py_{60}Cu_{40}$ via lmgf calculations}
     \end{measuredfigure}
     \end{figure}
-\begin{figure}[htp]
+\begin{figure}[h!]
     \centering
     \begin{measuredfigure}
     \includegraphics[scale=0.40]{specfunc/cu60}
@@ -704,7 +676,9 @@ This ratio of Permalloy may not be ideal, so a simulation of ($Fe_{40}Ni_{60}$) 
 
 
 
-As is obvious, the spectral function of the different Permalloy ratio leads to a lot of scattering even before the introduction of any copper into the mix. For this reason, we keep the current ratio of Permalloy at ($Fe_{20}Ni_{80}$). But perhaps there is something else to do, what if the Nickel was replaced now with Chromium Cr. This choice is motivated by the Cr orbital structure, which is similar to Ni, as they are in the same row of the periodic table \cite{ashcroft}. However they differ in that pure Chromium forms in BCC structure with a lattice constant of 2.88{\AA} and Nickel in FCC with 3.52{\AA}. Their differences might produce better spectral functions, so simulations of ($Fe_{20}Cr_{80}$) were carried out. The test of a Nickel-Chromium alloy was also investigated, with doubts as to its ferromagnetic properties. Firstly pure ($Fe_{20}Cr_{80}$) then addition of copper to quench again the magnetic moment. The following spectral functions show these results:
+As is obvious, the spectral function of the different Permalloy ratio leads to a lot of scattering even before the introduction of any copper into the mix. For this reason, we keep the current ratio of Permalloy at ($Fe_{20}Ni_{80}$). But perhaps there is something else to do, what if the Nickel was replaced now with Chromium Cr. This choice is motivated by the Cr orbital structure, which is similar to Ni, as they are in the same row of the periodic table \cite{ashcroft}. However they differ in that pure Chromium forms in BCC structure with a lattice constant of 2.88{\AA} and Nickel in FCC with 3.52{\AA}. Their differences might produce better spectral functions, so first a test simulation of ($Fe_{99}Cr_{1}$) was carried out with doubts as to its ferromagnetic properties.
+
+Firstly pure ($Fe_{20}Cr_{80}$) then addition of copper to quench again the magnetic moment. The following spectral functions show these results:
 
 
 
@@ -732,11 +706,63 @@ Another factor to consider is the Curie temperature of all of these alloys to se
 \caption{The calculation of Curie temperature T\textsubscript{C}(K) from exchange constants J\textsubscript{0}(mRy), for different ratios of pure permalloy Py-$Fe_{20}Cr_{80}$ and copper Cu.} 
 \end{table}
 
+The overall magnetic moment of the materials was also calculated by 'lmgf', yielding the following table (2).
 
+\begin{table}[h!]
+\centering
+ \begin{tabular}{||c c||} 
+ \hline
+ Alloy Ratio & Magnetisation[$emu/cm^3$] \\ [1ex] 
+ \hline\hline
+ $Py$ & 1144.67 \\ 
+ $Py_{80}Cu_{20}$ & 615.49 \\
+ $Py_{60}Cu_{40}$ & 445.70 \\
+ $Py_{40}Cu_{60}$ & 277.08 \\
+ $Py_{20}Cu_{80}$ & 89.76 \\ [1ex] 
+ \hline
+ \end{tabular}
+\caption{The calculation magnetic moment for different ratios of pure permalloy Py-$Fe_{20}Ni_{80}$ and copper Cu, in units of $[emu/cm^3]$} 
+\end{table}
 
+\begin{table}[h!]
+\centering
+ \begin{tabular}{||c c||} 
+ \hline
+ Alloy Ratio & Magnetisation[$emu/cm^3$] \\ [1ex] 
+ \hline\hline
+ $Fe_{99}Cr_1$ & 1893.10\\ 
+ $Fe_{90}Cr_{10}$ & 1627.15\\
+ $Fe_{60}Cr_{40}$ & 964.56 \\
+ $(Fe_{90}Cr_{10})_{90}Cu_{20}$ & 1316.01\\ 
+ $(Fe_{90}Cr_{10})_{60}Cu_{40}$ & 1007.13\\  
+ $(Fe_{90}Cr_{10})_{40}Cu_{60}$ & 664.71\\
+ $(Fe_{60}Cr_{40})_{80}Cu_{20}$ & 774.99\\ [1ex]
+ \hline
+ \end{tabular}
+\caption{The calculation magnetic moment for different ratios of pure permalloy Py-$Fe_{x}Cr_{1-x}$, in units of $[emu/cm^3]$} 
+\end{table}
 
+\begin{table}[h!]
+\centering
+ \begin{tabular}{||c c c c c c||} 
+ \hline
+ Alloy Ratio & $J_0^{Fe}$ & $J_0^{Cr}$ & $J_0^{Cu}$ & $J_0^{Total}$ & Curie $T_C$ \\ [1ex] 
+ \hline\hline
+ $Fe_{99}Cr_1$ & 12.369 & 15.346 & null & 12.399 & 1304.58 \\ 
+ $Fe_{90}Cr_{10}$ & 12.358 & 6.98 & null & 11.820 & 1243.702\\
+ $Fe_{60}Cr_{40}$ & 9.238 & 0.457 & null & 8.543 & 898.834 \\
+ $(Fe_{90}Cr_{10})_{90}Cu_{20}$ & 11.020 & 7.487 & 0.046 & 8.543 & 898.834 \\ 
+ $(Fe_{90}Cr_{10})_{60}Cu_{40}$ & 10.337 & 6.238 & 0.068 & 5.983 & 629.570 \\
+ $(Fe_{90}Cr_{10})_{40}Cu_{60}$ & 8.835 & 3.518 & 0.077 & 3.368 & 354.325 \\ 
+ $(Fe_{60}Cr_{40})_{80}Cu_{20}$ & 10.337 & 6.238 & 0.068 & 5.983 & 629.570 \\
+ $(Fe_{60}Cr_{40})_{70}Cu_{30}$ & 10.337 & 6.238 & 0.068 & 5.983 & 629.570 \\
+ $(Fe_{60}Cr_{40})_{60}Cu_{40}$ & 10.337 & 6.238 & 0.068 & 5.983 & 629.570 \\ [1ex]
+ \hline
+ \end{tabular}
+\caption{The calculation of Curie temperature T\textsubscript{C}(K) from exchange constants J\textsubscript{0}(mRy), for different ratios of Iron-chromium alloy, and alloyed with copper Cu.} 
+\end{table}
 
-\section{Conclusion}
+\section{Analysis and Conclusion}
 
 
 
